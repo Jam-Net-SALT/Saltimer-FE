@@ -1,10 +1,11 @@
 import React from "react";
-import SignupFormCard from "../../utils/Signup";
+import SignupForm from "../SignupForm";
+
 
 const LoginCard = () => {
     return (
         <div>
-            <SignupFormCard />
+            <SignupForm />
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import {Button, Card, Checkbox, Select, Space, Text, TextInput} from "@mantine/core";
+import {Button, Card, Checkbox, Space, Text, TextInput} from "@mantine/core";
 import {useForm} from "@mantine/hooks";
 import {useState} from "react";
 
@@ -9,7 +9,7 @@ interface FormProps {
     termsOfService?: boolean;
 }
 
-SignupFormCard.defaultProps = {
+SignupForm.defaultProps = {
     fullName: '',
     email: '',
     password: '',
@@ -17,7 +17,7 @@ SignupFormCard.defaultProps = {
     termsOfService: false,
 }
 
-function SignupFormCard(props: FormProps) {
+function SignupForm(props: FormProps) {
     const [passwordRepeat, setPasswordRepeat] = useState<string>('');
 
     const form = useForm<FormProps>({
@@ -103,4 +103,4 @@ function SignupFormCard(props: FormProps) {
     )
 
 }
-export default SignupFormCard;
+export default SignupForm;
