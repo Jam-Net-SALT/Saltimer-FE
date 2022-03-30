@@ -1,12 +1,8 @@
+import { Title } from "@mantine/core";
 import React from "react";
-import LoginCard from "../../components/LoginCard";
 
 function HomePage() {
-  return (
-    <div>
-      <LoginCard />
-    </div>
-  );
+  return <Title> Home page </Title>;
 }
 
 export default HomePage;

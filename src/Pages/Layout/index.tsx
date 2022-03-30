@@ -1,20 +1,13 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import {
-  AppShell,
-  Navbar,
-  Footer,
-  Text,
-  useMantineTheme,
-  Center,
-  Container,
-  SimpleGrid,
-  Grid,
-} from "@mantine/core";
+import { AppShell, useMantineTheme, Container } from "@mantine/core";
 import CustomHeader from "../../components/CustomHeader";
 import CustomFooter from "../../components/CustomFooter";
 import NavigationBar from "../../components/NavigationBar";
-import LoginCard from "../../components/LoginCard";
+import AuthPage from "../Auth";
+import HomePage from "../Home";
+import SettingsPage from "../Settings";
+import JoinSessionPage from "../JoinSession";
 
 const Layout = () => {
   const theme = useMantineTheme();
@@ -44,10 +37,10 @@ const Layout = () => {
     >
       <Container className='app__container'>
         <Routes>
-          <Route path='/' element={<h1>Home page</h1>} />
-          <Route path='/auth' element={<LoginCard />} />
-          <Route path='/settings' element={<h1>Settings page</h1>} />
-          <Route path='/session/:id' element={<h1>Mob session</h1>} />
+          <Route path='/' element={<HomePage />} />
+          <Route path='/auth' element={<AuthPage />} />
+          <Route path='/settings' element={<SettingsPage />} />
+          <Route path='/session/:id' element={<JoinSessionPage />} />
         </Routes>
       </Container>
     </AppShell>

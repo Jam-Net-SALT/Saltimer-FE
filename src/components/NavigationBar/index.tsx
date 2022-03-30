@@ -1,6 +1,7 @@
-import { ActionIcon, Center, Grid, Navbar, Text } from "@mantine/core";
+import { ActionIcon, Anchor, Center, Grid, Navbar, Text } from "@mantine/core";
 import { NavigationBarProps } from "./type";
 import { Home, Search, Settings } from "tabler-icons-react";
+import { Link } from "react-router-dom";
 
 function NavigationBar(props: NavigationBarProps) {
   return (
@@ -10,25 +11,37 @@ function NavigationBar(props: NavigationBarProps) {
       hidden={!props.toolbarState}
       width={{ sm: 200, lg: 300 }}
     >
-      <Grid>
-        <Grid.Col style={{ display: "flex", alignItems: "center" }}>
-          <ActionIcon color='orange'>
+      <Grid style={{ flexDirection: "column" }}>
+        <Anchor
+          style={{ display: "flex", alignItems: "center" }}
+          component={Link}
+          to='/'
+        >
+          <ActionIcon>
             <Home size={40} />
           </ActionIcon>
-          <Text color='orange'>Home</Text>
-        </Grid.Col>
-        <Grid.Col style={{ display: "flex", alignItems: "center" }}>
-          <ActionIcon color='orange'>
+          <Text>Home</Text>
+        </Anchor>
+        <Anchor
+          style={{ display: "flex", alignItems: "center" }}
+          component={Link}
+          to='/settings'
+        >
+          <ActionIcon>
             <Search size={40} />
           </ActionIcon>
-          <Text color='orange'>Join session</Text>
-        </Grid.Col>
-        <Grid.Col style={{ display: "flex", alignItems: "center" }}>
-          <ActionIcon color='orange'>
+          <Text>Join session</Text>
+        </Anchor>
+        <Anchor
+          style={{ display: "flex", alignItems: "center" }}
+          component={Link}
+          to='session/TestUrl'
+        >
+          <ActionIcon>
             <Settings size={40} />
           </ActionIcon>
-          <Text color='orange'>Settings</Text>
-        </Grid.Col>
+          <Text>Settings</Text>
+        </Anchor>
       </Grid>
     </Navbar>
   );
