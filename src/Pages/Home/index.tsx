@@ -6,7 +6,9 @@ function HomePage() {
   return (
     <div>
       <PlaceholderTitle />
-        <LoginCard />
+        <div style={{display: 'flex', justifyContent:'center'}}>
+            <LoginCard />
+        </div>
     </div>
   );
 }

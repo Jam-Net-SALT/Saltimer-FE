@@ -3,21 +3,16 @@ import {useForm} from "@mantine/hooks";
 import {useState} from "react";
 
 interface FormProps {
-    fullName?: string;
     email?: string;
     password?: string;
-    termsOfService?: boolean;
 }
 
-SignupForm.defaultProps = {
-    fullName: '',
+LoginForm.defaultProps = {
     email: '',
     password: '',
-    termsOfService: false,
 }
 
-function SignupForm(props: FormProps) {
-    const [passwordRepeat, setPasswordRepeat] = useState<string>('');
+function LoginForm(props: FormProps) {
 
     const form = useForm<FormProps>({
         initialValues: props,
@@ -28,7 +23,7 @@ function SignupForm(props: FormProps) {
 
     return (
         <form
-            style={{justifyContent: "space-between"}}
+            style={{justifyContent: 'space-between'}}
             onSubmit={form.onSubmit((values: FormProps) => console.log(values))}
         >
             <Text
@@ -36,15 +31,8 @@ function SignupForm(props: FormProps) {
                 weight={700}
                 align={'center'}
             >
-                Create an account
+                Log in to existing account
             </Text>
-            <Space h={'xl'}/>
-            <TextInput
-                label={'Full name'}
-                placeholder={'Your name'}
-                required
-                {...form.getInputProps('fullName')}
-            />
             <Space h={'xs'}/>
             <TextInput
                 label={'Email'}
@@ -61,23 +49,6 @@ function SignupForm(props: FormProps) {
                 required
                 {...form.getInputProps('password')}
             />
-            <Space h={'xs'}/>
-            <TextInput
-                value={passwordRepeat}
-                onChange={(event) => setPasswordRepeat(event.currentTarget.value)}
-                label={'Repeat password'}
-                placeholder={'Repeat your password'}
-                type={'password'}
-                error={!(form.getInputProps('password').value === passwordRepeat)}
-                required
-            />
-            <Space h={'xl'}/>
-            <Checkbox
-                label={'I agree to sell my privacy to JamNet'}
-                required
-                color={'teal'}
-                {...form.getInputProps('termsOfService', {type: 'checkbox'})}
-            />
             <Space h={'xl'}/>
             <Button
                 variant={'gradient'}
@@ -86,7 +57,7 @@ function SignupForm(props: FormProps) {
                 uppercase
                 type={'submit'}
             >
-                Sign up
+                Log In
             </Button>
             <Space h={'xl'}/>
             <Text
@@ -99,4 +70,4 @@ function SignupForm(props: FormProps) {
 
 }
 
-export default SignupForm;
+export default LoginForm;
