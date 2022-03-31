@@ -2,26 +2,24 @@ import { AppShell, useMantineTheme } from "@mantine/core";
 import CustomHeader from "../CustomHeader";
 import CustomFooter from "../CustomFooter";
 import NavigationBar from "../NavigationBar";
-
 import { LayoutProps } from "./type";
 import { useSelector } from "react-redux";
 import { selectShowSideBar } from "../../store/SiteConfig";
+import { selectLocalMobSession } from "../../store/LocalMobSession";
 
 const Layout = (props: LayoutProps) => {
-  const theme = useMantineTheme();
   const showSideBar = useSelector(selectShowSideBar);
+  const localMobSession = useSelector(selectLocalMobSession);
 
   return (
     <AppShell
       styles={{
         main: {
-          background:
-            theme.colorScheme === "dark"
-              ? theme.colors.dark[8]
-              : theme.colors.gray[1],
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          background: `url(${localMobSession.backgroundImageUrl}) no-repeat center center fixed`,
+          backgroundSize: "cover",
         },
       }}
       navbarOffsetBreakpoint='sm'
