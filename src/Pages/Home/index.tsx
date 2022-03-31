@@ -9,16 +9,28 @@ import MobTimer from "../../components/MobTimer";
 function HomePage() {
   const localMobSession = useSelector(selectLocalMobSession);
 
-  console.log("Session: ", localMobSession);
+  const getCurrentDriver = localMobSession.members.find(
+    (m) => m.turn === localMobSession.currentTurn
+  );
+
+  const geNoneDriverMembersList = localMobSession.members.filter(
+    (m) => m.turn !== localMobSession.currentTurn
+  );
   return (
-    <Grid>
+    <Grid justify='center'>
+      <Center component={Grid.Col} pb='xl'>
+        <Title>Driver</Title>
+      </Center>
+      <Center component={Grid.Col} pb='xl'>
+        <MobMember key={uuid()} user={getCurrentDriver} />
+      </Center>
       <Center component={Grid.Col} pb='xl'>
         <MobTimer />
       </Center>
       <Center component={Grid.Col} pb='xl'>
         <LocalSessionController />
       </Center>
-      {localMobSession.members.map((user) => (
+      {geNoneDriverMembersList.map((user) => (
         <MobMember key={uuid()} user={user} />
       ))}
     </Grid>

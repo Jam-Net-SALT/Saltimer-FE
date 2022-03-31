@@ -8,8 +8,14 @@ import { selectShowSideBar } from "../../store/SiteConfig";
 import { selectLocalMobSession } from "../../store/LocalMobSession";
 
 const Layout = (props: LayoutProps) => {
+  const theme = useMantineTheme();
   const showSideBar = useSelector(selectShowSideBar);
   const localMobSession = useSelector(selectLocalMobSession);
+
+  const getBackgroundImage = () =>
+    theme.colorScheme === "dark"
+      ? localMobSession.backgroundImageUrlDark
+      : localMobSession.backgroundImageUrl;
 
   return (
     <AppShell
@@ -18,7 +24,7 @@ const Layout = (props: LayoutProps) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          background: `url(${localMobSession.backgroundImageUrl}) no-repeat center center fixed`,
+          background: `url(${getBackgroundImage()}) no-repeat center center fixed`,
           backgroundSize: "cover",
         },
       }}

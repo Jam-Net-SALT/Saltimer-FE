@@ -1,7 +1,16 @@
 import { ActionIcon, Anchor, Text, useMantineColorScheme } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Home, MoonStars, Search, Settings, Sun } from "tabler-icons-react";
+import {
+  Home,
+  MoonStars,
+  PlayerPause,
+  PlayerPlay,
+  Search,
+  Settings,
+  Sun,
+} from "tabler-icons-react";
+import { MobTimerButtonProps } from "./type";
 
 export const HomeNavIcon = () => {
   return (
@@ -60,6 +69,34 @@ export const ThemeSchemeToggleIcon = () => {
       title='Toggle color scheme'
     >
       {isDarkMode ? <Sun size={40} /> : <MoonStars size={40} />}
+    </ActionIcon>
+  );
+};
+
+export const MobTimerPauseButton = (props: MobTimerButtonProps) => {
+  return (
+    <ActionIcon
+      variant='outline'
+      radius='lg'
+      color='white'
+      onClick={() => props.handler()}
+      title='Toggle color scheme'
+    >
+      <PlayerPause size={60} />
+    </ActionIcon>
+  );
+};
+
+export const MobTimerPlayButton = (props: MobTimerButtonProps) => {
+  return (
+    <ActionIcon
+      variant='outline'
+      radius='lg'
+      color='white'
+      onClick={() => props.handler()}
+      title='Toggle color scheme'
+    >
+      <PlayerPlay size={60} />
     </ActionIcon>
   );
 };

@@ -1,5 +1,5 @@
 import { AnonymsUser } from "../../types/User";
 
 export interface MobMemberProp {
-  user: AnonymsUser;
+  user: AnonymsUser | undefined;
 }

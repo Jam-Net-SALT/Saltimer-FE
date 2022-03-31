@@ -9,13 +9,13 @@ const MobMember = ({ user }: MobMemberProp) => {
     <Grid style={{ width: "fit-content" }}>
       <Grid.Col>
         <Center>
-          <Avatar src={user.imageUrl} alt="it's me" radius='xl' size='lg' />
+          <Avatar src={user?.imageUrl} alt="it's me" radius='xl' size='lg' />
         </Center>
       </Grid.Col>
       <Grid.Col>
         <Center>
           <Title order={2} className={classes.nameText}>
-            {user.name}
+            {user?.name}
           </Title>
         </Center>
       </Grid.Col>
