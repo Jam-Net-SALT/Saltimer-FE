@@ -7,11 +7,11 @@ const AuthPage = () => {
   return (
     <Card shadow='xl' style={{ width: 450 }}>
       <Tabs color='pink' grow position='center' variant='outline'>
-        <Tabs.Tab label='Sign Up'>
-          <SignupForm />
-        </Tabs.Tab>
-        <Tabs.Tab label='Log In'>
+        <Tabs.Tab label='Log in'>
           <LoginForm />
+        </Tabs.Tab>
+        <Tabs.Tab label='Sign up'>
+          <SignupForm />
         </Tabs.Tab>
       </Tabs>
     </Card>

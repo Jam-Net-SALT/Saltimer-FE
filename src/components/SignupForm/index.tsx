@@ -2,6 +2,7 @@ import {Button, Card, Checkbox, Space, Text, TextInput} from "@mantine/core";
 import {useForm} from "@mantine/hooks";
 import {useState} from "react";
 
+
 interface FormProps {
     fullName?: string;
     email?: string;
@@ -82,18 +83,11 @@ function SignupForm(props: FormProps) {
             <Button
                 variant={'gradient'}
                 gradient={{from: 'purple', to: 'pink'}}
-                fullWidth
-                uppercase
                 type={'submit'}
             >
                 Sign up
             </Button>
-            <Space h={'xl'}/>
-            <Text
-                size={'sm'}
-                align={'center'}
-            >
-            </Text>
+            <Space h={'sm'}/>
         </form>
     )
 
