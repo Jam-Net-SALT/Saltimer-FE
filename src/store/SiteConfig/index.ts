@@ -1,34 +1,31 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ColorScheme } from "@mantine/core";
+import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../index";
 
 // Define a type for the slice state
 interface SiteConfigState {
-  themeSchema: "light" | "dark";
+  themeScheme: ColorScheme;
 }
 
 // Define the initial state using that type
 const initialState: SiteConfigState = {
-  themeSchema: "light",
+  themeScheme: "light",
 };
 
 export const siteConfigSlice = createSlice({
   name: "siteConfig",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setDarkMode: (state) => {
-      state.themeSchema = "dark";
-    },
-    setLightMode: (state) => {
-      state.themeSchema = "light";
+    // Action to toggle between dark and light mode
+    toggleColorScheme: (state) => {
+      state.themeScheme = state.themeScheme === "dark" ? "light" : "dark";
     },
   },
 });
 
-export const { setDarkMode, setLightMode } = siteConfigSlice.actions;
+export const { toggleColorScheme } = siteConfigSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectThemeSchema = (state: RootState) =>
-  state.siteConfig.themeSchema;
+export const selectThemeScheme = (state: RootState) =>
+  state.siteConfig.themeScheme;
 
 export default siteConfigSlice.reducer;
