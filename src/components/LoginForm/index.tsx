@@ -1,4 +1,4 @@
-import {Button, Card, Checkbox, Space, Text, TextInput, Divider} from "@mantine/core";
+import {Button, Space, Text, TextInput, Divider} from "@mantine/core";
 import {useForm} from "@mantine/hooks";
 import {useState} from "react";
 
@@ -63,14 +63,6 @@ function LoginForm(props: FormProps) {
                 <Divider my="xs" label="Or" labelPosition="center"/>
                 <Space h={'sm'}/>
             </form>
-            <Button
-                variant={'gradient'}
-                gradient={{from: 'dimGrey', to: 'grey'}}
-                fullWidth
-                type={'submit'}
-            >
-                Log in as Guest
-            </Button>
         </>
     )
 

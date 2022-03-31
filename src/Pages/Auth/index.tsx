@@ -2,6 +2,7 @@ import {Card, Tabs} from "@mantine/core";
 import React from "react";
 import LoginForm from "../../components/LoginForm";
 import SignupForm from "../../components/SignupForm";
+import GuestForm from "../../components/GuestForm";
 
 const AuthPage = () => {
     return (
@@ -20,6 +21,7 @@ const AuthPage = () => {
                 <Tabs color='pink' grow position='center' variant='outline'>
                     <Tabs.Tab label='Log in'>
                         <LoginForm/>
+                        <GuestForm/>
                     </Tabs.Tab>
                     <Tabs.Tab label='Sign up'>
                         <SignupForm/>
