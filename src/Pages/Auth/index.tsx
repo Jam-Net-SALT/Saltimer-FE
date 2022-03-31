@@ -7,7 +7,7 @@ const AuthPage = () => {
     return (
         <>
             <div id="overlay" style={{
-                backdropFilter: 'blur', 
+                backdropFilter: 'blur(3px)',
                 position: 'fixed', 
                 width: '100%', 
                 height: '100%',
