@@ -9,7 +9,15 @@ const MobMember = ({ user }: MobMemberProp) => {
     <Grid style={{ width: "fit-content" }}>
       <Grid.Col>
         <Center>
-          <Avatar src={user?.imageUrl} alt="it's me" radius='xl' size='lg' />
+          <Avatar
+            src={user?.imageUrl}
+            alt={user?.name}
+            radius={100}
+            size={150}
+            color='violet'
+          >
+            {user?.name.match(/\b(\w)/g)}
+          </Avatar>
         </Center>
       </Grid.Col>
       <Grid.Col>
