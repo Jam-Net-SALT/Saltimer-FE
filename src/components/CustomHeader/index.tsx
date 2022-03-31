@@ -3,30 +3,30 @@ import {
   Burger,
   Grid,
   Header,
-  MediaQuery,
-  Text,
   Title,
   useMantineTheme,
 } from "@mantine/core";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectShowSideBar, toggleSideBar } from "../../store/SiteConfig";
 import { ThemeSchemeToggleIcon } from "../ActionIconButtons";
-import { HeaderProps } from "./type";
 
-function CustomHeader(props: HeaderProps) {
+function CustomHeader() {
+  const dispatch = useDispatch();
   const theme = useMantineTheme();
+  const showSideBar = useSelector(selectShowSideBar);
+
   return (
     <Header height={70} p='md'>
       <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
-        <MediaQuery largerThan='sm' styles={{ display: "none" }}>
-          <Burger
-            opened={props.toolbarState}
-            onClick={() => props.setToolBarState(!props.toolbarState)}
-            size='sm'
-            color={theme.colors.gray[6]}
-            mr='xl'
-          />
-        </MediaQuery>
+        <Burger
+          opened={showSideBar}
+          onClick={() => dispatch(toggleSideBar())}
+          size='sm'
+          color={theme.colors.gray[6]}
+          mr='xl'
+        />
 
         <Grid style={{ width: "100vw" }} align='center' justify='space-between'>
           <Grid.Col span={3}>

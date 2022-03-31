@@ -1,14 +1,15 @@
-import { useState } from "react";
 import { AppShell, useMantineTheme } from "@mantine/core";
 import CustomHeader from "../CustomHeader";
 import CustomFooter from "../CustomFooter";
 import NavigationBar from "../NavigationBar";
 
 import { LayoutProps } from "./type";
+import { useSelector } from "react-redux";
+import { selectShowSideBar } from "../../store/SiteConfig";
 
 const Layout = (props: LayoutProps) => {
   const theme = useMantineTheme();
-  const [toolbar, setToolbar] = useState<boolean>(false);
+  const showSideBar = useSelector(selectShowSideBar);
 
   return (
     <AppShell
@@ -26,11 +27,9 @@ const Layout = (props: LayoutProps) => {
       navbarOffsetBreakpoint='sm'
       asideOffsetBreakpoint='sm'
       fixed
-      navbar={<NavigationBar toolbarState={toolbar} />}
+      navbar={showSideBar ? <NavigationBar /> : undefined}
       footer={<CustomFooter />}
-      header={
-        <CustomHeader toolbarState={toolbar} setToolBarState={setToolbar} />
-      }
+      header={<CustomHeader />}
     >
       {props.children}
     </AppShell>

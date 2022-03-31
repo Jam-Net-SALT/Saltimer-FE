@@ -1,19 +1,13 @@
 import { Grid, Navbar } from "@mantine/core";
-import { NavigationBarProps } from "./type";
 import {
   HomeNavIcon,
   SearchNavIcon,
   SettingsNavIcon,
 } from "../ActionIconButtons";
 
-function NavigationBar(props: NavigationBarProps) {
+function NavigationBar() {
   return (
-    <Navbar
-      p='md'
-      hiddenBreakpoint='sm'
-      hidden={!props.toolbarState}
-      width={{ sm: 200, lg: 300 }}
-    >
+    <Navbar p='md' width={{ sm: 200, lg: 300 }}>
       <Grid style={{ flexDirection: "column" }}>
         <HomeNavIcon />
         <SearchNavIcon />
