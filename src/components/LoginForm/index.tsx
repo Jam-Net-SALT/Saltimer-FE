@@ -23,46 +23,46 @@ function LoginForm(props: FormProps) {
 
     return (
         <>
-        <form
-            style={{justifyContent: 'space-between'}}
-            onSubmit={form.onSubmit((values: FormProps) => console.log(values))}
-        >
-            <Text
-                size={'xl'}
-                weight={700}
-                align={'center'}
+            <form
+                style={{justifyContent: 'space-between'}}
+                onSubmit={form.onSubmit((values: FormProps) => console.log(values))}
             >
-                Log in to existing account
-            </Text>
-            <Space h={'xs'}/>
-            <TextInput
-                label={'Email'}
-                placeholder={'Your email'}
-                type={'email'}
-                required
-                {...form.getInputProps('email')}
-            />
-            <Space h={'xs'}/>
-            <TextInput
-                label={'Password'}
-                placeholder={'Your password'}
-                type={'password'}
-                required
-                {...form.getInputProps('password')}
-            />
-            <Space h={'xl'}/>
-            <Button
-                variant={'gradient'}
-                gradient={{from: 'purple', to: 'pink'}}
-                fullWidth
-                type={'submit'}
-            >
-                Log in
-            </Button>
-            <Space h={'sm'}/>
-            <Divider my="xs" label="Or" labelPosition="center" />
-            <Space h={'sm'}/>
-        </form>
+                <Text
+                    size={'xl'}
+                    weight={700}
+                    align={'center'}
+                >
+                    Log in to existing account
+                </Text>
+                <Space h={'xs'}/>
+                <TextInput
+                    label={'Email'}
+                    placeholder={'Your email'}
+                    type={'email'}
+                    required
+                    {...form.getInputProps('email')}
+                />
+                <Space h={'xs'}/>
+                <TextInput
+                    label={'Password'}
+                    placeholder={'Your password'}
+                    type={'password'}
+                    required
+                    {...form.getInputProps('password')}
+                />
+                <Space h={'xl'}/>
+                <Button
+                    variant={'gradient'}
+                    gradient={{from: 'purple', to: 'pink'}}
+                    fullWidth
+                    type={'submit'}
+                >
+                    Log in
+                </Button>
+                <Space h={'sm'}/>
+                <Divider my="xs" label="Or" labelPosition="center"/>
+                <Space h={'sm'}/>
+            </form>
             <Button
                 variant={'gradient'}
                 gradient={{from: 'dimGrey', to: 'grey'}}
@@ -71,7 +71,7 @@ function LoginForm(props: FormProps) {
             >
                 Log in as Guest
             </Button>
-            </>
+        </>
     )
 
 }
