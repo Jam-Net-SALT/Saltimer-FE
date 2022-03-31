@@ -19,16 +19,16 @@ const initialState: LocalMobSessionState = {
   backgroundImageUrl: "https://cdn.wallpapersafari.com/69/67/pRkM8g.jpg",
   startTime: undefined,
   pausedTime: undefined,
-  currentTurn: 1,
+  currentTurn: 0,
   breakMinutes: 10,
-  driverTime: 10,
+  driverTime: 1,
   breakRound: 2,
   members: [
     {
       name: "john doe",
       imageUrl:
         "https://spng.pngfind.com/pngs/s/5-52097_avatar-png-pic-vector-avatar-icon-png-transparent.png",
-      turn: 1,
+      turn: 0,
     },
   ],
 };
@@ -49,10 +49,14 @@ export const localMobSessionSlice = createSlice({
     addNewMember: (state, action: PayloadAction<AnonymsUser>) => {
       state.members = [...state.members, action.payload];
     },
+    stepToNextDriver: (state) => {
+      if (state.currentTurn + 1 > state.members.length) state.currentTurn = 0;
+      else state.currentTurn = state.currentTurn + 1;
+    },
   },
 });
 
-export const { startMobTimer, pauseMobTimer, addNewMember } =
+export const { startMobTimer, pauseMobTimer, addNewMember, stepToNextDriver } =
   localMobSessionSlice.actions;
 
 export const selectLocalMobSession = (state: RootState) =>
