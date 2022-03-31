@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
+import { ThemeSchemeToggleIcon } from "../ActionIconButtons";
 import { HeaderProps } from "./type";
 
 function CustomHeader(props: HeaderProps) {
@@ -38,6 +39,7 @@ function CustomHeader(props: HeaderProps) {
             <Anchor component={Link} to='/auth'>
               Login / Register
             </Anchor>
+            <ThemeSchemeToggleIcon />
           </Grid.Col>
         </Grid>
       </div>

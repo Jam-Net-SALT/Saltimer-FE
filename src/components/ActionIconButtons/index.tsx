@@ -1,7 +1,7 @@
-import { ActionIcon, Anchor, Text } from "@mantine/core";
+import { ActionIcon, Anchor, Text, useMantineColorScheme } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Home, Search, Settings } from "tabler-icons-react";
+import { Home, MoonStars, Search, Settings, Sun } from "tabler-icons-react";
 
 export const HomeNavIcon = () => {
   return (
@@ -45,5 +45,21 @@ export const SettingsNavIcon = () => {
       </ActionIcon>
       <Text>Settings</Text>
     </Anchor>
+  );
+};
+
+export const ThemeSchemeToggleIcon = () => {
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const isDarkMode = colorScheme === "dark";
+
+  return (
+    <ActionIcon
+      variant='outline'
+      color={isDarkMode ? "yellow" : "blue"}
+      onClick={() => toggleColorScheme()}
+      title='Toggle color scheme'
+    >
+      {isDarkMode ? <Sun size={40} /> : <MoonStars size={40} />}
+    </ActionIcon>
   );
 };

@@ -13,10 +13,11 @@ const App = () => {
   const dispatch = useDispatch();
   const themeScheme = useSelector(selectThemeScheme);
 
+  console.log("Theme: ", themeScheme);
   return (
     <ColorSchemeProvider
       colorScheme={themeScheme}
-      toggleColorScheme={() => dispatch(toggleColorScheme)}
+      toggleColorScheme={() => dispatch(toggleColorScheme())}
     >
       <MantineProvider theme={{ colorScheme: themeScheme }}>
         <Layout>
