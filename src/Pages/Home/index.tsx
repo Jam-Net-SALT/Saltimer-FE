@@ -5,6 +5,7 @@ import LocalSessionController from "../../components/LocalSessionController";
 import MobMember from "../../components/MobMember";
 import { selectLocalMobSession } from "../../store/LocalMobSession";
 import MobTimer from "../../components/MobTimer";
+import AddNewMemberForm from "../../components/AddNewMember";
 
 function HomePage() {
   const localMobSession = useSelector(selectLocalMobSession);
@@ -28,7 +29,7 @@ function HomePage() {
         <MobTimer />
       </Center>
       <Center component={Grid.Col} pb='xl'>
-        <LocalSessionController />
+        <AddNewMemberForm />
       </Center>
       {geNoneDriverMembersList.map((user) => (
         <MobMember key={uuid()} user={user} />
