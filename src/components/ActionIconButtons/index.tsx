@@ -78,11 +78,11 @@ export const MobTimerPauseButton = (props: MobTimerButtonProps) => {
     <ActionIcon
       variant='outline'
       radius='lg'
-      color='white'
+      mr='xl'
       onClick={() => props.handler()}
       title='Toggle color scheme'
     >
-      <PlayerPause size={60} />
+      <PlayerPause size={160} color='white' />
     </ActionIcon>
   );
 };
@@ -92,11 +92,11 @@ export const MobTimerPlayButton = (props: MobTimerButtonProps) => {
     <ActionIcon
       variant='outline'
       radius='lg'
-      color='white'
+      mr='xl'
       onClick={() => props.handler()}
       title='Toggle color scheme'
     >
-      <PlayerPlay size={60} />
+      <PlayerPlay size={100} color='white' />
     </ActionIcon>
   );
 };
