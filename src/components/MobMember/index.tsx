@@ -13,7 +13,7 @@ const MobMember = ({ user }: MobMemberProp) => {
             src={user?.imageUrl}
             alt={user?.name}
             radius={100}
-            size={150}
+            size='lg'
             color='violet'
           >
             {user?.name.match(/\b(\w)/g)}
