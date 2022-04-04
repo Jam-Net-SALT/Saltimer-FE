@@ -21,10 +21,13 @@ export const currentUserSlice = createSlice({
     setCurrentUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    resetCurrentUser: (state) => {
+      state.user = undefined;
+    },
   },
 });
 
-export const { setCurrentUser } = currentUserSlice.actions;
+export const { setCurrentUser, resetCurrentUser } = currentUserSlice.actions;
 
 export const selectUser = (state: RootState) => state.currentUser.user;
 

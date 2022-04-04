@@ -1,24 +1,31 @@
 import {
   Anchor,
   Burger,
-  Grid,
+  Button,
   Header,
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import React from "react";
+import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container } from "tabler-icons-react";
+import { AuthContext, AuthContextInterface } from "../../services/AuthProvider";
+import { selectUser } from "../../store/CurrentUser";
 import { selectShowSideBar, toggleSideBar } from "../../store/SiteConfig";
 import { ThemeSchemeToggleIcon } from "../ActionIconButtons";
 import useStyles from "./style";
 
 function CustomHeader() {
   const { classes } = useStyles();
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const theme = useMantineTheme();
   const showSideBar = useSelector(selectShowSideBar);
+  const auth = useContext<AuthContextInterface | null>(AuthContext);
+
+  const onLogout = () => {
+    auth?.logoutUser();
+  };
 
   return (
     <Header height={70} p='md'>
@@ -33,15 +40,21 @@ function CustomHeader() {
           />
           <Anchor component={Link} to='/'>
             <Title align='center' order={2}>
-              {" "}
               Saltimer
             </Title>
           </Anchor>
         </div>
         <div className={classes.container}>
-          <Anchor component={Link} to='/auth' pr='lg'>
-            Login / Register
-          </Anchor>
+          {user ? (
+            <Button variant='subtle' onClick={onLogout}>
+              Logout
+            </Button>
+          ) : (
+            <Anchor component={Link} to='/auth' pr='lg'>
+              Login / Register
+            </Anchor>
+          )}
+
           <ThemeSchemeToggleIcon />
         </div>
       </div>

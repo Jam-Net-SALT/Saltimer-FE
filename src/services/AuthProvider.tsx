@@ -1,18 +1,24 @@
 import { AxiosError } from "axios";
 import { createContext, ReactChild } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SignInFormProps } from "../components/LoginForm/helpers";
 import { SignUpFormProps } from "../components/SignupForm/helpers";
-import { setCurrentUser } from "../store/CurrentUser";
+import {
+  resetCurrentUser,
+  selectUser,
+  setCurrentUser,
+} from "../store/CurrentUser";
 import { setSignInError, setSignUpError } from "../store/Errors";
 import { SaltimerApi } from "./SaltimerApi";
 
 export interface AuthContextInterface {
   registerUser: (values: SignUpFormProps) => Promise<boolean>;
   logInUser: (values: SignInFormProps) => Promise<boolean>;
+  logoutUser: () => boolean;
 }
 
 function AuthActions(): AuthContextInterface {
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const registerUser = async (values: SignUpFormProps): Promise<boolean> => {
@@ -36,6 +42,7 @@ function AuthActions(): AuthContextInterface {
         response.data.token
       ).getLoggedInUser();
       dispatch(setCurrentUser(userResponse.data));
+      window.localStorage.clear();
       window.localStorage.setItem(
         userResponse.data.username,
         response.data.token
@@ -47,7 +54,16 @@ function AuthActions(): AuthContextInterface {
     }
   };
 
-  return { registerUser, logInUser };
+  const logoutUser = (): boolean => {
+    if (user) {
+      window.localStorage.removeItem(user?.username);
+      dispatch(resetCurrentUser());
+      return true;
+    }
+    return false;
+  };
+
+  return { registerUser, logInUser, logoutUser };
 }
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);
