@@ -25,7 +25,7 @@ const MobTimer = () => {
   );
 
   const getNextDriver = session.members.find(
-    (m) => m.turn === (session.currentTurn + 1 >= session.members.length ? 0 :  session.currentTurn + 1)
+    (m) => m.turn === (session.currentTurn + 1 >= session.members.length ? 0 : session.currentTurn + 1)
   );
 
   const timerCompleteHandler = (p: CountdownTimeDelta) => {
@@ -52,43 +52,40 @@ const MobTimer = () => {
   const getTimerApi = () => timerRef.current.getApi();
 
   return (
-    <Grid>
-      <Grid.Col>
-        <Countdown
-          key={"mob-timer-item" + isPaused}
-          date={addMinutes(Date.now(), session.driverTime)}
-          daysInHours
-          intervalDelay={1000}
-          autoStart={!isPaused}
-          zeroPadTime={2}
-          ref={timerRef}
-          onStart={() => dispatch(startMobTimer())}
-          onComplete={timerCompleteHandler}
-          renderer={({ total }: { total: string | number | Date }) => (
-            <div style={{ display: "flex", alignItems: "center" }}>
-              {isPaused ? (
-                <MobTimerPlayButton handler={timerPlayHandler} />
-              ) : (
-                <MobTimerPauseButton handler={timerPauseHandler} />
-              )}
-              <div>
-                <Title order={2} align='center' className={classes.counterText}>
-                  {new Date(total).getMinutes() +
-                    " : " +
-                    new Date(total).getSeconds()}
-                </Title>
-                <Progress
-                  size='xl'
-                  value={getTimerPercentage(total)}
-                  className={classes.counterText}
-                />
-              </div>
-            </div>
-          )}
-        />
-      </Grid.Col>
-      <Grid.Col></Grid.Col>
-    </Grid>
+    <Countdown
+      key={"mob-timer-item" + isPaused}
+      date={addMinutes(Date.now(), session.driverTime)}
+      daysInHours
+      intervalDelay={1000}
+      autoStart={!isPaused}
+      zeroPadTime={2}
+      ref={timerRef}
+      onStart={() => dispatch(startMobTimer())}
+      onComplete={timerCompleteHandler}
+      renderer={({ total }: { total: string | number | Date }) => (
+        <div style={{ width: "50%" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {isPaused ? (
+              <MobTimerPlayButton handler={timerPlayHandler} />
+            ) : (
+              <MobTimerPauseButton handler={timerPauseHandler} />
+            )}
+            <Title order={2} align='center' className={classes.counterText}>
+              {new Date(total).getMinutes() +
+                " : " +
+                new Date(total).getSeconds()}
+            </Title>
+          </div>
+          <Progress
+            mt="md"
+            size="xl"
+            radius="xl"
+            value={getTimerPercentage(total)}
+            color="#FF7A62"
+          />
+        </div>
+      )}
+    />
   );
 };
 
