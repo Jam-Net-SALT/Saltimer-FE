@@ -1,26 +1,22 @@
-import { AxiosError, AxiosResponse } from "axios";
-import { createContext, ReactChild, useState } from "react";
+import { AxiosError } from "axios";
+import { createContext, ReactChild } from "react";
 import { useDispatch } from "react-redux";
 import { SignUpFormProps } from "../components/SignupForm/helpers";
+import { setCurrentUser } from "../store/CurrentUser";
 import { setSignUpError } from "../store/Errors";
-import { User } from "../types/User";
 import { SaltimerApi } from "./SaltimerApi";
 
 export interface AuthContextInterface {
-  user?: User;
   registerUser: (values: SignUpFormProps) => Promise<boolean>;
 }
 
 function AuthActions(): AuthContextInterface {
   const dispatch = useDispatch();
-  const [user, setUser] = useState<User>();
-
-  console.log("User: ", user);
 
   const registerUser = async (values: SignUpFormProps): Promise<boolean> => {
     try {
       const response = await new SaltimerApi("").registerUser(values);
-      setUser(response.data);
+      dispatch(setCurrentUser(response.data));
       return true;
     } catch (e: AxiosError | any) {
       dispatch(setSignUpError(e.response?.data.message));
@@ -28,7 +24,7 @@ function AuthActions(): AuthContextInterface {
     }
   };
 
-  return { user, registerUser };
+  return { registerUser };
 }
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);

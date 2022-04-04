@@ -9,6 +9,7 @@ import JoinSessionPage from "../JoinSession";
 import { useDispatch, useSelector } from "react-redux";
 import { selectThemeScheme, toggleColorScheme } from "../../store/SiteConfig";
 import { AuthProvider } from "../../services/AuthProvider";
+import ProtectedRoute from "../../components/ProtectedRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -24,10 +25,19 @@ const App = () => {
           <Layout>
             <Container>
               <Routes>
-                <Route path='/' element={<HomePage />} />
+                <Route
+                  path='/'
+                  element={<ProtectedRoute render={<HomePage />} />}
+                />
                 <Route path='/auth' element={<AuthPage />} />
-                <Route path='/settings' element={<SettingsPage />} />
-                <Route path='/session/:id' element={<JoinSessionPage />} />
+                <Route
+                  path='/settings'
+                  element={<ProtectedRoute render={<SettingsPage />} />}
+                />
+                <Route
+                  path='/session/:id'
+                  element={<ProtectedRoute render={<JoinSessionPage />} />}
+                />
               </Routes>
             </Container>
           </Layout>

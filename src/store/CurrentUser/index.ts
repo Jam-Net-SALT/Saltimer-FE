@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../index";
 import { User } from "../../types/User";
+import { stat } from "fs";
 
 // Define a type for the slice state
 interface CurrentUserState {
@@ -17,7 +18,9 @@ export const currentUserSlice = createSlice({
   initialState,
   reducers: {
     // Action to toggle between dark and light mode
-    setCurrentUser: (state, action: PayloadAction<User>) => {},
+    setCurrentUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+    },
   },
 });
 
