@@ -1,47 +1,48 @@
-import { Button, Card, Checkbox, Space, Text, TextInput } from "@mantine/core";
+import {
+  Button,
+  Center,
+  Checkbox,
+  Loader,
+  Space,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { useForm } from "@mantine/hooks";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { registerHandler } from "../../store/CurrentUser";
-
-export interface SignUpFormProps {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  termsOfService: boolean;
-}
-
-const initialValues: SignUpFormProps = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  termsOfService: false,
-};
+import { useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AuthContext, AuthContextInterface } from "../../services/AuthProvider";
+import { resetSignUpError, selectSignupError } from "../../store/Errors";
+import {
+  signUpErrorMessages,
+  SignUpFormProps,
+  signUpInitialValues,
+  signUpValidationRules,
+} from "./helpers";
 
 function SignupForm() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
+  const auth = useContext<AuthContextInterface | null>(AuthContext);
+  const errors = useSelector(selectSignupError);
   const form = useForm<SignUpFormProps>({
-    initialValues: initialValues,
-    validationRules: {
-      firstName: (value) => value?.length > 2 && value?.length < 20,
-      lastName: (value) => value?.length > 2 && value?.length < 20,
-      email: (value) => /^\S+@\S+$/.test(value),
-      password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value),
-    },
-    errorMessages: {
-      firstName: "Fist name must be 2 to 10 characters",
-      lastName: "Last name must be 2 to 10 characters",
-      email: "Email address is not a valid email address",
-      password:
-        "Password must contain minimum eight characters, at least one letter and one numberFist name must be 2 to 10 characters",
-    },
+    initialValues: signUpInitialValues,
+    validationRules: signUpValidationRules,
+    errorMessages: signUpErrorMessages,
   });
 
-  const onSubmitHandler = (values: SignUpFormProps) => {
-    if (form.validate()) dispatch(registerHandler(values));
+  const onSubmitHandler = async (values: SignUpFormProps) => {
+    setLoading(true);
+    dispatch(resetSignUpError());
+
+    const registered = await auth?.registerUser(values);
+
+    if (registered) {
+      navigate("/");
+    }
+    setLoading(false);
   };
 
   return (
@@ -51,10 +52,21 @@ function SignupForm() {
         onSubmitHandler(values)
       )}
     >
-      <Text size={"xl"} weight={700} align={"center"}>
-        Create an account
+      <Center>
+        <Text size={"xl"} weight={700} align={"center"}>
+          Create an account
+        </Text>
+        {loading && <Loader ml='lg' />}
+      </Center>
+      <Text size={"xs"} color='red' align={"center"}>
+        {errors}
       </Text>
       <Space h={"xl"} />
+      <TextInput
+        label={"Username"}
+        placeholder={"Your username"}
+        {...form.getInputProps("username")}
+      />
       <TextInput
         label={"First name"}
         placeholder={"Your first name"}
@@ -72,7 +84,7 @@ function SignupForm() {
         label={"Email"}
         placeholder={"Your email"}
         required
-        {...form.getInputProps("email")}
+        {...form.getInputProps("emailAddress")}
       />
       <Space h={"xs"} />
       <TextInput
@@ -90,7 +102,9 @@ function SignupForm() {
         {...form.getInputProps("termsOfService", { type: "checkbox" })}
       />
       <Space h={"xl"} />
-      <Button type={"submit"}>Sign up</Button>
+      <Button disabled={loading} type={"submit"}>
+        Sign up
+      </Button>
       <Space h={"sm"} />
     </form>
   );

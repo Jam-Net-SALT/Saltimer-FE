@@ -8,6 +8,7 @@ import SettingsPage from "../Settings";
 import JoinSessionPage from "../JoinSession";
 import { useDispatch, useSelector } from "react-redux";
 import { selectThemeScheme, toggleColorScheme } from "../../store/SiteConfig";
+import { AuthProvider } from "../../services/AuthProvider";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -19,16 +20,18 @@ const App = () => {
       toggleColorScheme={() => dispatch(toggleColorScheme())}
     >
       <MantineProvider theme={{ colorScheme: themeScheme }}>
-        <Layout>
-          <Container>
-            <Routes>
-              <Route path='/' element={<HomePage />} />
-              <Route path='/auth' element={<AuthPage />} />
-              <Route path='/settings' element={<SettingsPage />} />
-              <Route path='/session/:id' element={<JoinSessionPage />} />
-            </Routes>
-          </Container>
-        </Layout>
+        <AuthProvider>
+          <Layout>
+            <Container>
+              <Routes>
+                <Route path='/' element={<HomePage />} />
+                <Route path='/auth' element={<AuthPage />} />
+                <Route path='/settings' element={<SettingsPage />} />
+                <Route path='/session/:id' element={<JoinSessionPage />} />
+              </Routes>
+            </Container>
+          </Layout>
+        </AuthProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );
