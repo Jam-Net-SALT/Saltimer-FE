@@ -5,11 +5,13 @@ import { User } from "../../types/User";
 // Define a type for the slice state
 interface ErrorsState {
   signUpError: string;
+  signInError: string;
 }
 
 // Define the initial state using that type
 const initialState: ErrorsState = {
   signUpError: "",
+  signInError: "",
 };
 
 export const errorsSlice = createSlice({
@@ -23,11 +25,24 @@ export const errorsSlice = createSlice({
     resetSignUpError: (state) => {
       state.signUpError = "";
     },
+
+    setSignInError: (state, action: PayloadAction<string>) => {
+      state.signInError = action.payload;
+    },
+    resetSignInError: (state) => {
+      state.signInError = "";
+    },
   },
 });
 
-export const { setSignUpError, resetSignUpError } = errorsSlice.actions;
+export const {
+  setSignUpError,
+  resetSignUpError,
+  setSignInError,
+  resetSignInError,
+} = errorsSlice.actions;
 
 export const selectSignupError = (state: RootState) => state.errors.signUpError;
+export const selectSignInError = (state: RootState) => state.errors.signInError;
 
 export default errorsSlice.reducer;
