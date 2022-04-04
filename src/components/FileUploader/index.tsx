@@ -21,9 +21,17 @@ export default function FileUploader() {
         </Group>
     );
 
+    const uploadImage = (image: any) => {
+        const data = new FormData()
+        data.append("file", image)
+        data.append("upload_preset", "icyemhhs")
+        data.append("cloud_name", "dmythh2na")
+        Axios.post("https://api.cloudinary.com/v1_1/dmythh2na/image/upload", data).then(response => response).catch(err => console.log(err))
+    }
+
     return (
         <Dropzone
-            onDrop={(files) => console.log('accepted files', files[0])}
+        onDrop={(files) => uploadImage(files[0])}
             onReject={(files) => console.log('rejected files', files[0])}
             maxSize={3 * 1024 ** 2}
             accept={IMAGE_MIME_TYPE}
