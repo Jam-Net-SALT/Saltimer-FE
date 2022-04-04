@@ -1,5 +1,6 @@
 import {
   Anchor,
+  Avatar,
   Burger,
   Button,
   Header,
@@ -11,7 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AuthContext, AuthContextInterface } from "../../services/AuthProvider";
 import { selectUser } from "../../store/CurrentUser";
-import { selectShowSideBar, toggleSideBar } from "../../store/SiteConfig";
+import {
+  selectShowSideBar,
+  selectThemeScheme,
+  toggleSideBar,
+} from "../../store/SiteConfig";
 import { ThemeSchemeToggleIcon } from "../ActionIconButtons";
 import useStyles from "./style";
 
@@ -21,6 +26,7 @@ function CustomHeader() {
   const dispatch = useDispatch();
   const theme = useMantineTheme();
   const showSideBar = useSelector(selectShowSideBar);
+  const themeScheme = useSelector(selectThemeScheme);
   const auth = useContext<AuthContextInterface | null>(AuthContext);
 
   const onLogout = () => {
@@ -48,10 +54,23 @@ function CustomHeader() {
         <div className={classes.container}>
           {user ? (
             <Button
-              variant='subtle'
+              variant='outline'
+              mr='md'
+              radius='lg'
+              color={themeScheme === "dark" ? "violet" : "orange"}
               onClick={onLogout}
               className={classes.textColor}
             >
+              <Avatar
+                src={user?.profileImage}
+                alt={user?.username}
+                radius='lg'
+                size='sm'
+                mr='sm'
+                color={themeScheme === "dark" ? "violet" : "orange"}
+              >
+                {user?.fullName.match(/\b(\w)/g)}
+              </Avatar>
               Logout
             </Button>
           ) : (

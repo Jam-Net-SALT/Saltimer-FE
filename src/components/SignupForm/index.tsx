@@ -10,7 +10,7 @@ import {
 import { useForm } from "@mantine/hooks";
 import { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext, AuthContextInterface } from "../../services/AuthProvider";
 import { resetSignUpError, selectSignupError } from "../../store/Errors";
 import {
@@ -21,9 +21,9 @@ import {
 } from "./helpers";
 
 function SignupForm() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
   const auth = useContext<AuthContextInterface | null>(AuthContext);
   const errors = useSelector(selectSignupError);
@@ -39,11 +39,11 @@ function SignupForm() {
 
     const registered = await auth?.registerUser(values);
 
-    if (registered) {
-      navigate("/");
-    }
+    if (registered) setSignedIn(true);
     setLoading(false);
   };
+
+  if (signedIn) return <Navigate to='/' />;
 
   return (
     <form
