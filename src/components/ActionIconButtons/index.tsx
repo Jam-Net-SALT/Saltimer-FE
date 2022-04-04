@@ -32,7 +32,7 @@ export const SearchNavIcon = () => {
     <Anchor
       style={{ display: "flex", alignItems: "center" }}
       component={Link}
-      to='/settings'
+      to='session/TestUrl'
     >
       <ActionIcon>
         <Search size={40} />
@@ -47,7 +47,7 @@ export const SettingsNavIcon = () => {
     <Anchor
       style={{ display: "flex", alignItems: "center" }}
       component={Link}
-      to='session/TestUrl'
+      to='/settings'
     >
       <ActionIcon>
         <Settings size={40} />
