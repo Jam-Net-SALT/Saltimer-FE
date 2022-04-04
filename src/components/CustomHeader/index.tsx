@@ -32,14 +32,14 @@ function CustomHeader() {
             mr='xs'
           />
           <Anchor component={Link} to='/'>
-            <Title align='center' order={2}>
+            <Title align='center' order={2} className={classes.textColor}>
               {" "}
               Saltimer
             </Title>
           </Anchor>
         </div>
         <div className={classes.container}>
-          <Anchor component={Link} to='/auth' pr='lg'>
+          <Anchor component={Link} to='/auth' pr='lg' className={classes.textColor}>
             Login / Register
           </Anchor>
           <ThemeSchemeToggleIcon />

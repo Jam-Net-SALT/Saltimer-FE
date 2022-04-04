@@ -12,6 +12,9 @@ const useStyles = createStyles((theme, _params, getRef) => ({
     flexDirection: "row",
     alignItems: "center",
   },
+  textColor: {
+    color: "#FF7A62"
+  }
 }));
 
 export default useStyles;
