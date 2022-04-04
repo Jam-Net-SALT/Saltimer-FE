@@ -1,5 +1,5 @@
 import { Center, Grid, Progress, Title } from "@mantine/core";
-import React, { MutableRefObject, useRef, useState } from "react";
+import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import Countdown, { CountdownTimeDelta } from "react-countdown";
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { addMinutes, millisecondsToSeconds } from "date-fns";
@@ -11,6 +11,7 @@ import {
 } from "../../store/LocalMobSession";
 import { MobTimerPauseButton, MobTimerPlayButton } from "../ActionIconButtons";
 import useStyles from "./style";
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 
 const MobTimer = () => {
   const { classes } = useStyles();
@@ -19,6 +20,7 @@ const MobTimer = () => {
   const timerRef = useRef() as MutableRefObject<Countdown>;
   const [isPaused, setIsPaused] = useState(true);
   const { speak } = useSpeechSynthesis();
+  const [connection, setConnection] = useState<null | HubConnection>(null);
 
   const getCurrentDriver = session.members.find(
     (m) => m.turn === session.currentTurn
@@ -50,6 +52,33 @@ const MobTimer = () => {
     100;
 
   const getTimerApi = () => timerRef.current.getApi();
+
+  useEffect(() => {
+    const connect = new HubConnectionBuilder()
+        .withUrl("https://localhost:7165/test/application")
+        .withAutomaticReconnect()
+        .build();
+
+    setConnection(connect);
+  }, []);
+
+  useEffect(() => {
+    if (connection) {
+      connection
+          .start()
+          .then(() => {
+            connection.on("ReceiveMessage", (message) => {
+              getTimerApi();
+            });
+          })
+          .catch((error) => console.log(error));
+    }
+  }, [connection]);
+
+  const sendMessage = async () => {
+    if (connection) await connection.send("SendMessage", getTimerApi); // <--- This will most likely have to be changed
+    getTimerApi(); // <--- This will most likely have to be changed
+     };
 
   return (
     <Grid>
