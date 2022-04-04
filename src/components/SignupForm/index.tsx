@@ -1,96 +1,113 @@
-import {Button, Card, Checkbox, Space, Text, TextInput} from "@mantine/core";
-import {useForm} from "@mantine/hooks";
-import {useState} from "react";
+import {
+  Button,
+  Center,
+  Checkbox,
+  Loader,
+  Space,
+  Text,
+  TextInput,
+} from "@mantine/core";
+import { useForm } from "@mantine/hooks";
+import { useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AuthContext, AuthContextInterface } from "../../services/AuthProvider";
+import { resetSignUpError, selectSignupError } from "../../store/Errors";
+import {
+  signUpErrorMessages,
+  SignUpFormProps,
+  signUpInitialValues,
+  signUpValidationRules,
+} from "./helpers";
 
+function SignupForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
-interface FormProps {
-    fullName?: string;
-    email?: string;
-    password?: string;
-    termsOfService?: boolean;
-}
+  const auth = useContext<AuthContextInterface | null>(AuthContext);
+  const errors = useSelector(selectSignupError);
+  const form = useForm<SignUpFormProps>({
+    initialValues: signUpInitialValues,
+    validationRules: signUpValidationRules,
+    errorMessages: signUpErrorMessages,
+  });
 
-SignupForm.defaultProps = {
-    fullName: '',
-    email: '',
-    password: '',
-    termsOfService: false,
-}
+  const onSubmitHandler = async (values: SignUpFormProps) => {
+    setLoading(true);
+    dispatch(resetSignUpError());
 
-function SignupForm(props: FormProps) {
-    const [passwordRepeat, setPasswordRepeat] = useState<string>('');
+    const registered = await auth?.registerUser(values);
 
-    const form = useForm<FormProps>({
-        initialValues: props,
-        validationRules: {
-            email: (value) => /^\S+@\S+$/.test(value || ''),
-        },
-    });
+    if (registered) {
+      navigate("/");
+    }
+    setLoading(false);
+  };
 
-    return (
-        <form
-            style={{justifyContent: "space-between"}}
-            onSubmit={form.onSubmit((values: FormProps) => console.log(values))}
-        >
-            <Text
-                size={'xl'}
-                weight={700}
-                align={'center'}
-            >
-                Create an account
-            </Text>
-            <Space h={'xl'}/>
-            <TextInput
-                label={'Full name'}
-                placeholder={'Your name'}
-                required
-                {...form.getInputProps('fullName')}
-            />
-            <Space h={'xs'}/>
-            <TextInput
-                label={'Email'}
-                placeholder={'Your email'}
-                type={'email'}
-                required
-                {...form.getInputProps('email')}
-            />
-            <Space h={'xs'}/>
-            <TextInput
-                label={'Password'}
-                placeholder={'Your password'}
-                type={'password'}
-                required
-                {...form.getInputProps('password')}
-            />
-            <Space h={'xs'}/>
-            <TextInput
-                value={passwordRepeat}
-                onChange={(event) => setPasswordRepeat(event.currentTarget.value)}
-                label={'Repeat password'}
-                placeholder={'Repeat your password'}
-                type={'password'}
-                error={!(form.getInputProps('password').value === passwordRepeat)}
-                required
-            />
-            <Space h={'xl'}/>
-            <Checkbox
-                label={'I agree to sell my privacy to JamNet'}
-                required
-                color={'teal'}
-                {...form.getInputProps('termsOfService', {type: 'checkbox'})}
-            />
-            <Space h={'xl'}/>
-            <Button
-                variant={'gradient'}
-                gradient={{from: 'purple', to: 'pink'}}
-                type={'submit'}
-            >
-                Sign up
-            </Button>
-            <Space h={'sm'}/>
-        </form>
-    )
-
+  return (
+    <form
+      style={{ justifyContent: "space-between" }}
+      onSubmit={form.onSubmit((values: SignUpFormProps) =>
+        onSubmitHandler(values)
+      )}
+    >
+      <Center>
+        <Text size={"xl"} weight={700} align={"center"}>
+          Create an account
+        </Text>
+        {loading && <Loader ml='lg' />}
+      </Center>
+      <Text size={"xs"} color='red' align={"center"}>
+        {errors}
+      </Text>
+      <Space h={"xl"} />
+      <TextInput
+        label={"Username"}
+        placeholder={"Your username"}
+        {...form.getInputProps("username")}
+      />
+      <TextInput
+        label={"First name"}
+        placeholder={"Your first name"}
+        {...form.getInputProps("firstName")}
+      />
+      <Space h={"xs"} />
+      <TextInput
+        label={"Last name"}
+        placeholder={"Your last name"}
+        required
+        {...form.getInputProps("lastName")}
+      />
+      <Space h={"xs"} />
+      <TextInput
+        label={"Email"}
+        placeholder={"Your email"}
+        required
+        {...form.getInputProps("emailAddress")}
+      />
+      <Space h={"xs"} />
+      <TextInput
+        label={"Password"}
+        placeholder={"Your password"}
+        type={"password"}
+        required
+        {...form.getInputProps("password")}
+      />
+      <Space h={"xs"} />
+      <Checkbox
+        label={"I agree to sell my privacy to JamNet"}
+        required
+        color={"teal"}
+        {...form.getInputProps("termsOfService", { type: "checkbox" })}
+      />
+      <Space h={"xl"} />
+      <Button disabled={loading} type={"submit"}>
+        Sign up
+      </Button>
+      <Space h={"sm"} />
+    </form>
+  );
 }
 
 export default SignupForm;

@@ -24,7 +24,7 @@ const initialState: LocalMobSessionState = {
   pausedTime: undefined,
   currentTurn: 0,
   breakMinutes: 10,
-  driverTime: 5,
+  driverTime: 1,
   breakRound: 2,
   members: [
     {
