@@ -1,6 +1,7 @@
 import { Center, Grid, Progress, Title } from "@mantine/core";
 import React, { MutableRefObject, useRef, useState } from "react";
 import Countdown, { CountdownTimeDelta } from "react-countdown";
+import { useSpeechSynthesis } from 'react-speech-kit';
 import { addMinutes, millisecondsToSeconds } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,8 +18,19 @@ const MobTimer = () => {
   const dispatch = useDispatch();
   const timerRef = useRef() as MutableRefObject<Countdown>;
   const [isPaused, setIsPaused] = useState(true);
+  const { speak } = useSpeechSynthesis();
+
+  const getCurrentDriver = session.members.find(
+    (m) => m.turn === session.currentTurn
+  );
+
+  const getNextDriver = session.members.find(
+    (m) => m.turn === (session.currentTurn + 1 >= session.members.length ? 0 :  session.currentTurn + 1)
+  );
 
   const timerCompleteHandler = (p: CountdownTimeDelta) => {
+    const speechNxtDriver = `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name} time.`;
+    speak({ text: speechNxtDriver });
     getTimerApi().start();
     dispatch(stepToNextDriver());
   };
