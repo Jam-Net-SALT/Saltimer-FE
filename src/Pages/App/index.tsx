@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectThemeScheme, toggleColorScheme } from "../../store/SiteConfig";
 import { AuthProvider } from "../../services/AuthProvider";
 import ProtectedRoute from "../../components/ProtectedRoute";
+import { SaltimerProvider } from "../../services/SaltimerProvider";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,12 +32,16 @@ const App = () => {
                 />
                 <Route path='/auth' element={<AuthPage />} />
                 <Route
-                  path='/settings'
-                  element={<ProtectedRoute render={<SettingsPage />} />}
+                  path='/join'
+                  element={
+                    <SaltimerProvider>
+                      <ProtectedRoute render={<JoinSessionPage />} />
+                    </SaltimerProvider>
+                  }
                 />
                 <Route
                   path='/session/:id'
-                  element={<ProtectedRoute render={<JoinSessionPage />} />}
+                  element={<ProtectedRoute render={<SettingsPage />} />}
                 />
               </Routes>
             </Container>

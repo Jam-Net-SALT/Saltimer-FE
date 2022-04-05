@@ -32,7 +32,7 @@ export const SearchNavIcon = () => {
     <Anchor
       style={{ display: "flex", alignItems: "center" }}
       component={Link}
-      to='session/TestUrl'
+      to='join'
     >
       <ActionIcon>
         <Search size={40} />
