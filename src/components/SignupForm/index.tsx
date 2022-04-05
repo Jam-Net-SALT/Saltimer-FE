@@ -100,11 +100,15 @@ function SignupForm() {
       <Checkbox
         label={"I agree to sell my privacy to JamNet"}
         required
-        color={"teal"}
+        color={"orange"}
         {...form.getInputProps("termsOfService", { type: "checkbox" })}
       />
       <Space h={"xl"} />
-      <Button disabled={loading} type={"submit"}>
+      <Button 
+          disabled={loading}
+          type={"submit"} 
+          variant={"gradient"} 
+          gradient={{from: 'orange', to: 'red'}}>
         Sign up
       </Button>
       <Space h={"sm"} />

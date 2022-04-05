@@ -82,6 +82,7 @@ function LoginForm() {
         <Space h={"xl"} />
         <Button
           variant={"gradient"}
+          gradient={{from: 'orange', to: 'red'}}
           fullWidth
           type={"submit"}
           disabled={loading}
