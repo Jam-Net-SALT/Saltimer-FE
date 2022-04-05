@@ -22,8 +22,6 @@ const Layout = (props: LayoutProps) => {
       styles={{
         main: {
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           background: `url(${getBackgroundImage()}) no-repeat center center fixed`,
           backgroundSize: "cover",
         },
