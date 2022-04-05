@@ -65,11 +65,13 @@ function SignupForm() {
       <TextInput
         label={"Username"}
         placeholder={"Your username"}
+        required
         {...form.getInputProps("username")}
       />
       <TextInput
         label={"First name"}
         placeholder={"Your first name"}
+        required
         {...form.getInputProps("firstName")}
       />
       <Space h={"xs"} />

@@ -19,7 +19,7 @@ function GuestForm(props: GuestProps) {
             <TextInput
                 label={'Full name'}
                 placeholder={'Your name'}
-                type={'email'}
+                type={'text'}
                 required
                 {...form.getInputProps('name')}
             />
