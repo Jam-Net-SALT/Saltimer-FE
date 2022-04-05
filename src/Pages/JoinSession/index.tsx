@@ -11,17 +11,21 @@ import {
 } from "@mantine/core";
 import { AxiosError } from "axios";
 import { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 import { SaltimerApi } from "../../services/SaltimerApi";
 import {
   SaltimerContext,
   SaltimerContextInterface,
 } from "../../services/SaltimerProvider";
+import { selectUser } from "../../store/CurrentUser";
 import { MobSession } from "../../types/MobSession";
 import useStyles from "./style";
+import { MobTimerConnection } from "./types";
 
 function JoinSessionPage() {
   const { classes } = useStyles();
+  const user = useSelector(selectUser);
   const [searchError, setSearchError] = useState("");
   const [jwtToken] = useState(window.localStorage.getItem("auth"));
   const [invitationToken, setInvitationToken] = useState("");
@@ -29,7 +33,7 @@ function JoinSessionPage() {
   const hub = useContext<SaltimerContextInterface | null>(SaltimerContext);
 
   useEffect(() => {
-    console.log("Check");
+    console.log("Check fetchUserSessions");
     fetchUserSessions();
   }, []);
 
@@ -40,7 +44,7 @@ function JoinSessionPage() {
     }
   };
 
-  const joinMobSessions = async () => {
+  const joinMobSessionsFromToken = async () => {
     try {
       if (jwtToken) {
         const response = await new SaltimerApi(jwtToken).joinMobTimerSession(
@@ -56,6 +60,12 @@ function JoinSessionPage() {
     }
   };
 
+  const joinMobSession = (requestData: MobTimerConnection) => {
+    hub?.joinSession(requestData);
+  };
+
+  // console.log("Session: ", hub?.session);
+
   return (
     <div className={classes.wrapper}>
       <Center className={classes.inputContainer} pt={50}>
@@ -65,7 +75,7 @@ function JoinSessionPage() {
           value={invitationToken}
           onChange={(e) => setInvitationToken(e.target.value)}
         />
-        <Button onClick={joinMobSessions}> Join session </Button>
+        <Button onClick={joinMobSessionsFromToken}> Join session </Button>
       </Center>
       <Center pt='md'>
         <Text className={classes.errorMsg}> {searchError} </Text>
@@ -95,6 +105,12 @@ function JoinSessionPage() {
                   color='blue'
                   fullWidth
                   style={{ marginTop: 14 }}
+                  onClick={() =>
+                    joinMobSession({
+                      UserId: user?.id,
+                      Uuid: m.uniqueId,
+                    })
+                  }
                 >
                   Join session
                 </Button>
