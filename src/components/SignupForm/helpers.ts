@@ -22,18 +22,18 @@ export const signUpInitialValues: SignUpFormProps = {
 };
 
 export const signUpValidationRules: ValidationRule<SignUpFormProps> = {
-  username: (value) => value?.length > 2 && value?.length < 20,
-  firstName: (value) => value?.length > 2 && value?.length < 20,
-  lastName: (value) => value?.length > 2 && value?.length < 20,
+  username: (value) => value?.length > 1 && value?.length < 21,
+  firstName: (value) => value?.length > 1 && value?.length < 16,
+  lastName: (value) => value?.length > 1 && value?.length < 16,
   emailAddress: (value) => /^\S+@\S+$/.test(value),
   password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value),
 };
 
 export const signUpErrorMessages: UseFormErrors<SignUpFormProps> = {
-  username: "Fist name must be 2 to 10 characters",
-  firstName: "Fist name must be 2 to 10 characters",
-  lastName: "Last name must be 2 to 10 characters",
-  emailAddress: "Email address is not a valid email address",
+  username: "Username must be 2 to 20 characters",
+  firstName: "First name must be 2 to 15 characters",
+  lastName: "Last name must be 2 to 15 characters",
+  emailAddress: "Email address is not valid",
   password:
-    "Password must contain minimum eight characters, at least one letter and one numberFist name must be 2 to 10 characters",
+    "Password must contain minimum eight characters, at least one letter and one number",
 };

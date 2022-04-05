@@ -14,12 +14,12 @@ export const signInInitialValues: SignInFormProps = {
 };
 
 export const signInValidationRules: ValidationRule<SignInFormProps> = {
-  username: (value) => value?.length > 2 && value?.length < 20,
+  username: (value) => value?.length > 1 && value?.length < 21,
   password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value),
 };
 
 export const signInErrorMessages: UseFormErrors<SignInFormProps> = {
-  username: "Fist name must be 2 to 10 characters",
+  username: "Username must be 2 to 20 characters",
   password:
-    "Password must contain minimum eight characters, at least one letter and one numberFist name must be 2 to 10 characters",
+    "Password must contain minimum eight characters, at least one letter and one number",
 };
