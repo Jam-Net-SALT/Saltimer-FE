@@ -10,7 +10,7 @@ import {
 import { useForm } from "@mantine/hooks";
 import { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { AuthContext, AuthContextInterface } from "../../services/AuthProvider";
 import { resetSignUpError, selectSignupError } from "../../store/Errors";
 import {

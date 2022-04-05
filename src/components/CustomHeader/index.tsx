@@ -53,26 +53,30 @@ function CustomHeader() {
         </div>
         <div className={classes.container}>
           {user ? (
-            <Button
-              variant='outline'
-              mr='md'
-              radius='lg'
-              color={themeScheme === "dark" ? "violet" : "orange"}
-              onClick={onLogout}
-              className={classes.textColor}
-            >
-              <Avatar
-                src={user?.profileImage}
-                alt={user?.username}
+            <>
+              <Anchor component={Link} to='/settings'>
+                <Avatar
+                  src={user?.profileImage}
+                  alt={user?.username}
+                  radius='lg'
+                  size='sm'
+                  mr='sm'
+                  color={themeScheme === "dark" ? "violet" : "orange"}
+                >
+                  {user?.fullName.match(/\b(\w)/g)}
+                </Avatar>
+              </Anchor>
+              <Button
+                variant='outline'
+                mr='md'
                 radius='lg'
-                size='sm'
-                mr='sm'
                 color={themeScheme === "dark" ? "violet" : "orange"}
+                onClick={onLogout}
+                className={classes.textColor}
               >
-                {user?.fullName.match(/\b(\w)/g)}
-              </Avatar>
-              Logout
-            </Button>
+                Logout
+              </Button>
+            </>
           ) : (
             <Anchor
               component={Link}
@@ -87,7 +91,7 @@ function CustomHeader() {
           <ThemeSchemeToggleIcon />
         </div>
       </div>
-    </Header>
+    </Header >
   );
 }
 

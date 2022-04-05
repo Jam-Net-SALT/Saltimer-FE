@@ -1,5 +1,4 @@
 import { ActionIcon, Anchor, Text, useMantineColorScheme } from "@mantine/core";
-import React from "react";
 import { Link } from "react-router-dom";
 import {
   Home,
@@ -99,4 +98,4 @@ export const MobTimerPlayButton = (props: MobTimerButtonProps) => {
       <PlayerPlay size={100} color='white' />
     </ActionIcon>
   );
-};
+}
