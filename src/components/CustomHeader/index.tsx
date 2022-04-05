@@ -34,7 +34,7 @@ function CustomHeader() {
   };
 
   return (
-    <Header height={70} p='md'>
+    <Header height={70} p='s'>
       <div className={classes.wrapper}>
         <div className={classes.container}>
           <Burger
@@ -45,10 +45,7 @@ function CustomHeader() {
             mr='xs'
           />
           <Anchor component={Link} to='/'>
-            <Title align='center' order={2} className={classes.textColor}>
-              {" "}
-              Saltimer
-            </Title>
+            <img src={'/saltimer.png'} alt='Saltimer' width={200} height={'auto'} />
           </Anchor>
         </div>
         <div className={classes.container}>
@@ -61,7 +58,7 @@ function CustomHeader() {
                   radius='lg'
                   size='sm'
                   mr='sm'
-                  color={themeScheme === "dark" ? "violet" : "orange"}
+                  color={themeScheme === "dark" ? "orange" : "orange"}
                 >
                   {user?.fullName.match(/\b(\w)/g)}
                 </Avatar>
@@ -70,7 +67,7 @@ function CustomHeader() {
                 variant='outline'
                 mr='md'
                 radius='lg'
-                color={themeScheme === "dark" ? "violet" : "orange"}
+                color={themeScheme === "dark" ? "orange" : "orange"}
                 onClick={onLogout}
                 className={classes.textColor}
               >

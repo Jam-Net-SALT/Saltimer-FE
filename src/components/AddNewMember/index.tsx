@@ -50,7 +50,12 @@ const AddNewMemberForm = () => {
         {...form.getInputProps("name")}
       />
 
-      <Button ml='xl' radius='xl' type={"submit"}>
+      <Button 
+          ml='xl' 
+          radius='xl' 
+          type={"submit"} 
+          variant={"gradient"}
+          gradient={{from: 'orange', to: 'red'}}>
         Add
       </Button>
     </form>

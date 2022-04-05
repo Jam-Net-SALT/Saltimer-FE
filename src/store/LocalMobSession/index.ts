@@ -19,7 +19,7 @@ interface LocalMobSessionState {
 const initialState: LocalMobSessionState = {
   backgroundImageUrlDark: "https://cdn.wallpapersafari.com/69/67/pRkM8g.jpg",
   backgroundImageUrl:
-    "https://images.unsplash.com/photo-1497412159286-98933a0e327f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMGZvZ3xlbnwwfHwwfHw%3D&w=1000&q=80",
+    "https://papers.co/wallpaper/papers.co-mg01-cloud-flare-white-sky-wanna-fly-nature-35-3840x2160-4k-wallpaper.jpg",
   startTime: undefined,
   pausedTime: undefined,
   currentTurn: 0,

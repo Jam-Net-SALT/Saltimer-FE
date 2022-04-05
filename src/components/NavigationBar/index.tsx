@@ -7,7 +7,7 @@ import {
 
 function NavigationBar() {
   return (
-    <Navbar p='md' width={{ sm: 200, lg: 300 }}>
+    <Navbar p='md' width={{ sm: 150, lg: 200 }} >
       <Grid style={{ flexDirection: "column" }}>
         <HomeNavIcon />
         <SearchNavIcon />
