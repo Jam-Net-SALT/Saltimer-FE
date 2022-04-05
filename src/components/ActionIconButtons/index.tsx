@@ -18,6 +18,7 @@ export const HomeNavIcon = () => {
       style={{ display: "flex", alignItems: "center" }}
       component={Link}
       to='/'
+      color={'orange'}
     >
       <ActionIcon>
         <Home size={40} />
@@ -34,6 +35,7 @@ export const SearchNavIcon = () => {
       style={{ display: "flex", alignItems: "center" }}
       component={Link}
       to='session/TestUrl'
+      color={'orange'}
     >
       <ActionIcon>
         <Search size={40} />
@@ -50,6 +52,7 @@ export const SettingsNavIcon = () => {
       style={{ display: "flex", alignItems: "center" }}
       component={Link}
       to='/settings'
+      color={'orange'}
     >
       <ActionIcon>
         <Settings size={40} />
