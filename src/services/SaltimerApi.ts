@@ -11,6 +11,9 @@ export class SaltimerApi extends HttpClientBase {
   public registerUser = (signUpFormValues: SignUpFormProps) =>
     this.instance.post<User>(`/auth/register`, signUpFormValues);
 
+  public updateUser = (user: User) =>
+    this.instance.put<User>(`/auth/user`, user);
+
   public logInUser = (signInFormValues: SignInFormProps) =>
     this.instance.post<TokenResponse>(`/auth/login`, signInFormValues);
 

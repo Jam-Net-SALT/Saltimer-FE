@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { createContext, ReactChild, useEffect } from "react";
+import { createContext, ReactChild, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SignInFormProps } from "../components/LoginForm/helpers";
@@ -17,18 +17,21 @@ export interface AuthContextInterface {
   registerUser: (values: SignUpFormProps) => Promise<boolean>;
   logInUser: (values: SignInFormProps) => Promise<boolean>;
   logoutUser: () => boolean;
+  updateUser:(values: User) => Promise<boolean>;
 }
 
 function AuthActions(): AuthContextInterface {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const[token, setToken] = useState("");
 
   useEffect(() => {
-    const reAuthenticate = async (token: string) => {
+    const reAuthenticate = async (localJwtToken: string) => {
       try {
-        const userResponse = await getCurrentUser(token);
+        const userResponse = await getCurrentUser(localJwtToken);
         dispatch(setCurrentUser(userResponse));
+        setToken(localJwtToken);
         navigate("/");
       } catch (e) {
         window.localStorage.removeItem("auth");
@@ -62,6 +65,7 @@ function AuthActions(): AuthContextInterface {
       dispatch(setCurrentUser(userResponse));
       window.localStorage.removeItem("auth");
       window.localStorage.setItem("auth", response.data.token);
+      setToken(response.data.token);
       return true;
     } catch (e: AxiosError | any) {
       dispatch(setSignInError("Wrong credentials"));
@@ -69,8 +73,21 @@ function AuthActions(): AuthContextInterface {
     }
   };
 
-  const getCurrentUser = async (token: string): Promise<User> => {
-    const userResponse = await new SaltimerApi(token).getLoggedInUser();
+  const updateUser = async (values: User): Promise<boolean> => {
+    try {
+      const response = await new SaltimerApi(token).updateUser(values);
+      const userResponse = await getCurrentUser(token);
+
+      dispatch(setCurrentUser(userResponse));
+      return true;
+    } catch (e: AxiosError | any) {
+      dispatch(setSignInError("Wrong credentials"));
+      return false;
+    }
+  };
+
+  const getCurrentUser = async (JwtToken: string): Promise<User> => {
+    const userResponse = await new SaltimerApi(JwtToken).getLoggedInUser();
     return userResponse.data;
   };
 
@@ -78,12 +95,13 @@ function AuthActions(): AuthContextInterface {
     if (user) {
       window.localStorage.removeItem(user?.username);
       dispatch(resetCurrentUser());
+      setToken("");
       return true;
     }
     return false;
   };
 
-  return { registerUser, logInUser, logoutUser };
+  return { registerUser, logInUser, logoutUser, updateUser};
 }
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);
