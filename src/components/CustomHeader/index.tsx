@@ -57,7 +57,7 @@ function CustomHeader() {
               variant='outline'
               mr='md'
               radius='lg'
-              color={themeScheme === "dark" ? "violet" : "orange"}
+              color={themeScheme === "dark" ? "orange" : "orange"} //TODO change first to violet when figured out how to make gradient color change on dark mode
               onClick={onLogout}
               className={classes.textColor}
             >
@@ -67,7 +67,7 @@ function CustomHeader() {
                 radius='lg'
                 size='sm'
                 mr='sm'
-                color={themeScheme === "dark" ? "violet" : "orange"}
+                color={themeScheme === "dark" ? "orange" : "orange"} //TODO change first to violet when figured out how to make gradient color change on dark mode
               >
                 {user?.fullName.match(/\b(\w)/g)}
               </Avatar>

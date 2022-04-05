@@ -14,7 +14,7 @@ const MobMember = ({ user }: MobMemberProp) => {
             alt={user?.name}
             radius={100}
             size='lg'
-            color='violet'
+            color='orange'
           >
             {user?.name.match(/\b(\w)/g)}
           </Avatar>

@@ -7,7 +7,5 @@ A
 package-lock.json,f/a/fa288d1472d29beccb489a676f68739ad365fc47
 Q
 !src/components/MobMember/style.ts,0/3/03749fadeca07ecfc29244ff2746ea7b5f20c357
-H
-src/Pages/Home/index.tsx,f/0/f025b5bafaced2ad2a417881a389c1a8388dfa4a
 U
 %src/components/CustomFooter/index.tsx,d/7/d769368ea5b1d6bc5ea794b63334f4b05c17ca82

@@ -22,7 +22,8 @@ export const HomeNavIcon = () => {
       <ActionIcon>
         <Home size={40} />
       </ActionIcon>
-      <Text>Home</Text>
+      <Text variant={"gradient"}
+            gradient={{from: 'orange', to: 'red'}}>Home</Text>
     </Anchor>
   );
 };
@@ -37,7 +38,8 @@ export const SearchNavIcon = () => {
       <ActionIcon>
         <Search size={40} />
       </ActionIcon>
-      <Text>Join session</Text>
+      <Text variant={"gradient"}
+            gradient={{from: 'orange', to: 'red'}}>Join session</Text>
     </Anchor>
   );
 };
@@ -52,7 +54,8 @@ export const SettingsNavIcon = () => {
       <ActionIcon>
         <Settings size={40} />
       </ActionIcon>
-      <Text>Settings</Text>
+      <Text variant={"gradient"}
+            gradient={{from: 'orange', to: 'red'}}>Settings</Text>
     </Anchor>
   );
 };
@@ -64,7 +67,7 @@ export const ThemeSchemeToggleIcon = () => {
   return (
     <ActionIcon
       variant='outline'
-      color={isDarkMode ? "yellow" : "blue"}
+      color={isDarkMode ? "orange" : "violet"}
       onClick={() => toggleColorScheme()}
       title='Toggle color scheme'
     >
