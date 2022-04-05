@@ -1,5 +1,5 @@
-import { Center, Grid, Progress, Title } from "@mantine/core";
-import React, { MutableRefObject, useRef, useState } from "react";
+import { Progress, Title } from "@mantine/core";
+import { MutableRefObject, useRef, useState } from "react";
 import Countdown, { CountdownTimeDelta } from "react-countdown";
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { addMinutes, millisecondsToSeconds } from "date-fns";
@@ -31,7 +31,7 @@ const MobTimer = () => {
   const timerCompleteHandler = (p: CountdownTimeDelta) => {
     const speechNxtDriver = `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name} time.`;
     speak({ text: speechNxtDriver });
-    getTimerApi().start();
+    getTimerApi().pause();
     dispatch(stepToNextDriver());
   };
 
