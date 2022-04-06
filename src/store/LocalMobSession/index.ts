@@ -24,7 +24,7 @@ const initialState: LocalMobSessionState = {
   pausedTime: undefined,
   currentTurn: 0,
   breakMinutes: 10,
-  driverTime: 1,
+  driverTime: 5,
   breakRound: 2,
   members: [
     {
@@ -54,11 +54,10 @@ export const localMobSessionSlice = createSlice({
   reducers: {
     // Action to toggle between dark and light mode
     startMobTimer: (state) => {
+      state.pausedTime = state.startTime;
       state.startTime = Date.now();
-      state.pausedTime = undefined;
     },
     pauseMobTimer: (state) => {
-      state.startTime = undefined;
       state.pausedTime = Date.now();
     },
     addNewMember: (state, action: PayloadAction<AnonymsUser>) => {

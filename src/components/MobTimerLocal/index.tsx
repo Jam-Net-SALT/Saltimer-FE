@@ -2,9 +2,18 @@ import { Center, Grid, Progress, Title } from "@mantine/core";
 import React, { MutableRefObject, useRef, useState } from "react";
 import Countdown, { CountdownTimeDelta } from "react-countdown";
 import { useSpeechSynthesis } from "react-speech-kit";
-import { addMinutes, millisecondsToSeconds } from "date-fns";
+import {
+  addMinutes,
+  differenceInMilliseconds,
+  differenceInMinutes,
+  getMinutes,
+  millisecondsToSeconds,
+  sub,
+  subMinutes,
+} from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  pauseMobTimer,
   selectLocalMobSession,
   startMobTimer,
   stepToNextDriver,
@@ -55,16 +64,41 @@ const MobTimerLocal = () => {
 
   const getTimerApi = () => timerRef.current.getApi();
 
+  const getTime = () => {
+    if (session.startTime && session.pausedTime) {
+      if (isPaused) {
+        return addMinutes(
+          Date.now(),
+          session.driverTime -
+            differenceInMinutes(
+              new Date(session.pausedTime),
+              new Date(session.startTime)
+            )
+        );
+      }
+      return addMinutes(
+        Date.now(),
+        session.driverTime +
+          differenceInMinutes(
+            new Date(session.pausedTime),
+            new Date(session.startTime)
+          )
+      );
+    }
+
+    return addMinutes(Date.now(), session.driverTime);
+  };
   return (
     <Countdown
-      key={"mob-timer-item" + isPaused}
-      date={addMinutes(Date.now(), session.driverTime)}
+      key={"mob-timer-item"}
+      date={getTime()}
       daysInHours
       intervalDelay={1000}
-      autoStart={!isPaused}
+      autoStart={false}
       zeroPadTime={2}
       ref={timerRef}
       onStart={() => dispatch(startMobTimer())}
+      onPause={() => dispatch(pauseMobTimer())}
       onComplete={timerCompleteHandler}
       renderer={({ total }: { total: string | number | Date }) => (
         <div style={{ width: "50%" }}>
