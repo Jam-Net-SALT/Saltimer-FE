@@ -12,6 +12,7 @@ import {
 import { AxiosError } from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { SaltimerApi } from "../../services/SaltimerApi";
 import {
@@ -25,6 +26,7 @@ import { MobTimerConnection } from "./types";
 
 function JoinSessionPage() {
   const { classes } = useStyles();
+  const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [searchError, setSearchError] = useState("");
   const [jwtToken] = useState(window.localStorage.getItem("auth"));
@@ -60,11 +62,13 @@ function JoinSessionPage() {
     }
   };
 
-  const joinMobSession = (requestData: MobTimerConnection) => {
-    hub?.joinSession(requestData);
+  const joinMobSession = async (
+    id: number,
+    requestData: MobTimerConnection
+  ) => {
+    await hub?.joinSession(requestData);
+    navigate(`/session/${id}`);
   };
-
-  // console.log("Session: ", hub?.session);
 
   return (
     <div className={classes.wrapper}>
@@ -106,7 +110,7 @@ function JoinSessionPage() {
                   fullWidth
                   style={{ marginTop: 14 }}
                   onClick={() =>
-                    joinMobSession({
+                    joinMobSession(m.id, {
                       UserId: user?.id,
                       Uuid: m.uniqueId,
                     })

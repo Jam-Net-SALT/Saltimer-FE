@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "../../components/Layout";
 import AuthPage from "../Auth";
 import HomePage from "../Home";
-import SettingsPage from "../Settings";
+import SessionPage from "../Session";
 import JoinSessionPage from "../JoinSession";
 import { useDispatch, useSelector } from "react-redux";
 import { selectThemeScheme, toggleColorScheme } from "../../store/SiteConfig";
@@ -25,25 +25,23 @@ const App = () => {
         <AuthProvider>
           <Layout>
             <Container>
-              <Routes>
-                <Route
-                  path='/'
-                  element={<ProtectedRoute render={<HomePage />} />}
-                />
-                <Route path='/auth' element={<AuthPage />} />
-                <Route
-                  path='/join'
-                  element={
-                    <SaltimerProvider>
-                      <ProtectedRoute render={<JoinSessionPage />} />
-                    </SaltimerProvider>
-                  }
-                />
-                <Route
-                  path='/session/:id'
-                  element={<ProtectedRoute render={<SettingsPage />} />}
-                />
-              </Routes>
+              <SaltimerProvider>
+                <Routes>
+                  <Route
+                    path='/'
+                    element={<ProtectedRoute render={<HomePage />} />}
+                  />
+                  <Route path='/auth' element={<AuthPage />} />
+                  <Route
+                    path='/join'
+                    element={<ProtectedRoute render={<JoinSessionPage />} />}
+                  />
+                  <Route
+                    path='/session/:id'
+                    element={<ProtectedRoute render={<SessionPage />} />}
+                  />
+                </Routes>
+              </SaltimerProvider>
             </Container>
           </Layout>
         </AuthProvider>

@@ -1,13 +1,12 @@
 import { v4 as uuid } from "uuid";
 import { Center, Grid, Title } from "@mantine/core";
 import { useSelector } from "react-redux";
-import LocalSessionController from "../../components/LocalSessionController";
-import MobMember from "../../components/MobMember";
+import { MobMemberLocal } from "../../components/MobMember";
 import { selectLocalMobSession } from "../../store/LocalMobSession";
-import MobTimer from "../../components/MobTimer";
+import MobTimerLocal from "../../components/MobTimerLocal";
 import AddNewMemberForm from "../../components/AddNewMember";
 
-function HomePage() {
+const HomePage = () => {
   const localMobSession = useSelector(selectLocalMobSession);
 
   const getCurrentDriver = localMobSession.members.find(
@@ -23,19 +22,19 @@ function HomePage() {
         <Title>Driver</Title>
       </Center>
       <Center component={Grid.Col} pb='xl'>
-        <MobMember key={uuid()} user={getCurrentDriver} />
+        <MobMemberLocal user={getCurrentDriver} />
       </Center>
       <Center component={Grid.Col} pb='xl'>
-        <MobTimer />
+        <MobTimerLocal />
       </Center>
       <Center component={Grid.Col} pb='xl'>
         <AddNewMemberForm />
       </Center>
       {geNoneDriverMembersList.map((user) => (
-        <MobMember key={uuid()} user={user} />
+        <MobMemberLocal key={uuid()} user={user} />
       ))}
     </Grid>
   );
-}
+};
 
 export default HomePage;

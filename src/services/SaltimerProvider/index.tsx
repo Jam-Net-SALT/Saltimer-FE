@@ -5,14 +5,19 @@ import {
   HubConnection,
 } from "@microsoft/signalr";
 import { MobTimerConnection } from "../../Pages/JoinSession/types";
-import { SessionInfoResponse, SessionTimerResponse } from "./type";
+import {
+  ServerInfoResponse,
+  SessionInfoResponse,
+  SessionTimerResponse,
+} from "./type";
 import { User } from "../../types/User";
 
 export interface SaltimerContextInterface {
   sessionInfo: SessionInfoResponse | undefined;
   sessionTimer: SessionTimerResponse | undefined;
   onlineMember: User[] | undefined;
-  serverInfo: string;
+  serverInfo: ServerInfoResponse | undefined;
+  clearServerInfo: () => void;
   joinSession: (data: MobTimerConnection) => Promise<void>;
 }
 
@@ -32,7 +37,9 @@ function SaltimerActions(): SaltimerContextInterface {
     SessionTimerResponse | undefined
   >();
   const [onlineMember, setOnlineMember] = useState<User[] | undefined>();
-  const [serverInfo, setServerInfo] = useState<string>("");
+  const [serverInfo, setServerInfo] = useState<
+    ServerInfoResponse | undefined
+  >();
 
   useEffect(() => {
     try {
@@ -69,7 +76,7 @@ function SaltimerActions(): SaltimerContextInterface {
       setOnlineMember(onlineUsers);
     });
 
-    hub.on(HubEndPints.NotifyClient, (info: string) => {
+    hub.on(HubEndPints.NotifyClient, ({ ...info }: ServerInfoResponse) => {
       setServerInfo(info);
       console.log("info: ", info);
     });
@@ -83,7 +90,16 @@ function SaltimerActions(): SaltimerContextInterface {
     await connection?.invoke(HubEndPints.JoinSession, data);
   };
 
-  return { joinSession, sessionInfo, sessionTimer, onlineMember, serverInfo };
+  const clearServerInfo = () => setServerInfo(undefined);
+
+  return {
+    joinSession,
+    sessionInfo,
+    sessionTimer,
+    onlineMember,
+    serverInfo,
+    clearServerInfo,
+  };
 }
 
 export const SaltimerContext = createContext<SaltimerContextInterface | null>(

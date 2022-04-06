@@ -6,7 +6,7 @@ export interface SessionInfoResponse {
   id: number;
   roundTime: number;
   uniqueId: string;
-  users: User;
+  users: User[];
 }
 
 export interface SessionTimerResponse {
@@ -15,4 +15,9 @@ export interface SessionTimerResponse {
   pausedTime: Date;
   startTime: Date;
   totalRoundCount: number;
+}
+
+export interface ServerInfoResponse {
+  title: string;
+  message: string;
 }
