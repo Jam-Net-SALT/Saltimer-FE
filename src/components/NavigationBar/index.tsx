@@ -3,7 +3,7 @@ import {
   HomeNavIcon,
   SearchNavIcon,
   SettingsNavIcon,
-  AdMobIcon
+  AdMobIcon, AboutIcon
 } from "../ActionIconButtons";
 import { Space } from '@mantine/core';
 
@@ -20,6 +20,9 @@ function NavigationBar() {
         <Space h={"xs"} />
         <AdMobIcon />
         <Space h={"xs"} />
+      </Grid>
+      <Grid style={{ flexDirection: "column-reverse", height: "100vh" }}>
+        <AboutIcon />
       </Grid>
     </Navbar>
   );

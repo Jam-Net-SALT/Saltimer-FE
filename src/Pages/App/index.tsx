@@ -13,6 +13,7 @@ import { AuthProvider } from "../../services/AuthProvider";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { SaltimerProvider } from "../../services/SaltimerProvider";
 import AddMob from "../AddMob";
+import AboutPage from "../About";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,10 @@ const App = () => {
                   <Route
                     path='/session/:id'
                     element={<ProtectedRoute render={<SessionPage />} />}
+                  />
+                  <Route 
+                      path='/about'
+                      element={<AboutPage />}
                   />
                 </Routes>
               </SaltimerProvider>
