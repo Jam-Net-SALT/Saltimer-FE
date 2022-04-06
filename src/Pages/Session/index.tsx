@@ -2,16 +2,13 @@ import { v4 as uuid } from "uuid";
 import {
   Avatar,
   AvatarsGroup,
-  Card,
+  Button,
   Center,
   Grid,
   Notification,
-  Tabs,
-  Text,
   Title,
 } from "@mantine/core";
-import React, { useContext } from "react";
-import AddNewMemberForm from "../../components/AddNewMember";
+import { useContext, useEffect } from "react";
 import { MobMemberRemote } from "../../components/MobMember";
 import MobTimerRemote from "../../components/MobTimerRemote";
 import {
@@ -19,12 +16,17 @@ import {
   SaltimerContextInterface,
 } from "../../services/SaltimerProvider";
 import { Bulb } from "tabler-icons-react";
+import { useNavigate } from "react-router-dom";
 
 const SessionPage = () => {
+  const navigator = useNavigate();
   const hub = useContext<SaltimerContextInterface | null>(SaltimerContext);
 
+  useEffect(() => {
+    return () => hub?.disconnectHub();
+  }, []);
+
   if (!hub) {
-    console.log("Hub: ", hub);
     return <h1> Session Not found</h1>;
   }
 
@@ -45,6 +47,11 @@ const SessionPage = () => {
     setTimeout(() => {
       hub.clearServerInfo();
     }, 5000);
+
+  const leaveSession = () => {
+    hub.disconnectHub();
+    navigator("/");
+  };
 
   return (
     <Grid justify='center' pt='lg'>
@@ -79,16 +86,23 @@ const SessionPage = () => {
           ))}
         </AvatarsGroup>
       </Center>
-      {hub?.serverInfo ? (
-        <Notification
-          icon={<Bulb size={18} />}
-          color='teal'
-          title={hub?.serverInfo.title}
-          onClose={hub.clearServerInfo}
-        >
-          {hub.serverInfo.message}
-        </Notification>
-      ) : null}
+      <Center component={Grid.Col} mt={30}>
+        <Button color='red' variant='filled' onClick={leaveSession}>
+          Leave session
+        </Button>
+      </Center>
+      <Grid.Col>
+        {hub?.serverInfo ? (
+          <Notification
+            icon={<Bulb size={18} />}
+            color='teal'
+            title={hub?.serverInfo.title}
+            onClose={hub.clearServerInfo}
+          >
+            {hub.serverInfo.message}
+          </Notification>
+        ) : null}
+      </Grid.Col>
     </Grid>
   );
 };

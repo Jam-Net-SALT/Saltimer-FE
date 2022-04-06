@@ -26,7 +26,7 @@ import { MobTimerConnection } from "./types";
 
 function JoinSessionPage() {
   const { classes } = useStyles();
-  const navigate = useNavigate();
+  const navigator = useNavigate();
   const user = useSelector(selectUser);
   const [searchError, setSearchError] = useState("");
   const [jwtToken] = useState(window.localStorage.getItem("auth"));
@@ -35,8 +35,13 @@ function JoinSessionPage() {
   const hub = useContext<SaltimerContextInterface | null>(SaltimerContext);
 
   useEffect(() => {
-    console.log("Check fetchUserSessions");
-    fetchUserSessions();
+    const setup = async () => {
+      console.log("fetchUserSessions");
+      await fetchUserSessions();
+      console.log("Connecting...");
+      await hub?.setUpConnection();
+    };
+    setup();
   }, []);
 
   const fetchUserSessions = async () => {
@@ -67,7 +72,7 @@ function JoinSessionPage() {
     requestData: MobTimerConnection
   ) => {
     await hub?.joinSession(requestData);
-    navigate(`/session/${id}`);
+    navigator(`/session/${id}`);
   };
 
   return (

@@ -11,6 +11,7 @@ import {
   SessionTimerResponse,
 } from "./type";
 import { User } from "../../types/User";
+import { useNavigate } from "react-router-dom";
 
 export interface SaltimerContextInterface {
   sessionInfo: SessionInfoResponse | undefined;
@@ -18,6 +19,8 @@ export interface SaltimerContextInterface {
   onlineMember: User[] | undefined;
   serverInfo: ServerInfoResponse | undefined;
   clearServerInfo: () => void;
+  setUpConnection: () => Promise<void>;
+  disconnectHub: () => void;
   joinSession: (data: MobTimerConnection) => Promise<void>;
 }
 
@@ -26,9 +29,11 @@ enum HubEndPints {
   JoinSession = "JoinSession",
   ReceiveOnlineMember = "ReceiveOnlineMember",
   NotifyClient = "NotifyClient",
+  ReceiveUserLeaveSession = "ReceiveUserLeaveSession",
 }
 
 function SaltimerActions(): SaltimerContextInterface {
+  const navigator = useNavigate();
   const [connection, setConnection] = useState<HubConnection | undefined>();
   const [sessionInfo, setSessionInfo] = useState<
     SessionInfoResponse | undefined
@@ -41,21 +46,19 @@ function SaltimerActions(): SaltimerContextInterface {
     ServerInfoResponse | undefined
   >();
 
-  useEffect(() => {
+  const setUpConnection = async (): Promise<void> => {
     try {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const hub = new HubConnectionBuilder()
         .withUrl(process.env.REACT_APP_SALTIMER_SOCKET)
         .configureLogging(LogLevel.Information)
         .build();
-
       registerListeners(hub);
-
       setConnection(hub);
     } catch (e) {
       console.log(e);
     }
-  }, []);
+  };
 
   const registerListeners = (hub: HubConnection) => {
     hub.on(
@@ -80,6 +83,20 @@ function SaltimerActions(): SaltimerContextInterface {
       setServerInfo(info);
       console.log("info: ", info);
     });
+
+    hub.on(
+      HubEndPints.ReceiveUserLeaveSession,
+      ({ ...info }: ServerInfoResponse) => {
+        setServerInfo(info);
+        console.log("info: ", info);
+      }
+    );
+  };
+
+  const disconnectHub = () => {
+    if (connection?.state === "Connected") {
+      connection.stop();
+    }
   };
 
   const joinSession = async (data: MobTimerConnection) => {
@@ -88,17 +105,20 @@ function SaltimerActions(): SaltimerContextInterface {
     }
 
     await connection?.invoke(HubEndPints.JoinSession, data);
+    window.localStorage.setItem("session", await JSON.stringify(data));
   };
 
   const clearServerInfo = () => setServerInfo(undefined);
 
   return {
+    setUpConnection,
     joinSession,
     sessionInfo,
     sessionTimer,
     onlineMember,
     serverInfo,
     clearServerInfo,
+    disconnectHub,
   };
 }
 
