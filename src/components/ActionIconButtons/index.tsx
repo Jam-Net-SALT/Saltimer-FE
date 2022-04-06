@@ -9,6 +9,7 @@ import {
   LayoutGridAdd,
   Settings,
   Sun,
+  QuestionMark
 } from "tabler-icons-react";
 import { MobTimerButtonProps } from "./type";
 
@@ -63,6 +64,24 @@ export const SettingsNavIcon = () => {
         Settings
       </Text>
     </Anchor>
+  );
+};
+
+export const AboutIcon = () => {
+  return (
+      <Anchor
+          style={{ display: "flex", alignItems: "center" }}
+          component={Link}
+          to='/about'
+          color={"orange"}
+      >
+        <ActionIcon>
+          <QuestionMark size={40} />
+        </ActionIcon>
+        <Text variant={"gradient"} gradient={{ from: "orange", to: "red" }}>
+          About
+        </Text>
+      </Anchor>
   );
 };
 
