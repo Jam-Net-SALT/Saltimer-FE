@@ -4,7 +4,6 @@ import {
   Card,
   Center,
   Grid,
-  Group,
   Text,
   TextInput,
   Title,
@@ -12,7 +11,7 @@ import {
 import { AxiosError } from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { SaltimerApi } from "../../services/SaltimerApi";
 import {
@@ -57,7 +56,11 @@ function JoinSessionPage() {
         const response = await new SaltimerApi(jwtToken).joinMobTimerSession(
           invitationToken
         );
-        console.log("Error: ", response.data);
+        await hub?.joinSession({
+          Uuid: response.data.session.uniqueId,
+          UserId: user?.id,
+        });
+        navigator(`/session/${response.data.session.id}`);
       }
     } catch (e: AxiosError | any) {
       if (e.response.data.title)
