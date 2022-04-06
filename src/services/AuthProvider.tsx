@@ -10,6 +10,7 @@ import {
   setCurrentUser,
 } from "../store/CurrentUser";
 import { setSignInError, setSignUpError } from "../store/Errors";
+import { MobSession } from "../types/MobSession";
 import { User } from "../types/User";
 import { SaltimerApi } from "./SaltimerApi";
 
@@ -18,6 +19,7 @@ export interface AuthContextInterface {
   logInUser: (values: SignInFormProps) => Promise<boolean>;
   logoutUser: () => boolean;
   updateUser:(values: User) => Promise<boolean>;
+  postMobTimer:(values: MobSession) => Promise<boolean>;
 }
 
 function AuthActions(): AuthContextInterface {
@@ -86,6 +88,19 @@ function AuthActions(): AuthContextInterface {
     }
   };
 
+  const postMobTimer = async (values: MobSession): Promise<boolean> => {
+    try {
+      const response = await new SaltimerApi(token).postMobTimer(values);
+      const userResponse = await getCurrentUser(token);
+
+      dispatch(setCurrentUser(userResponse));
+      return true;
+    } catch (e: AxiosError | any) {
+      dispatch(setSignInError("Wrong credentials"));
+      return false;
+    }
+  };
+
   const getCurrentUser = async (JwtToken: string): Promise<User> => {
     const userResponse = await new SaltimerApi(JwtToken).getLoggedInUser();
     return userResponse.data;
@@ -101,7 +116,7 @@ function AuthActions(): AuthContextInterface {
     return false;
   };
 
-  return { registerUser, logInUser, logoutUser, updateUser};
+  return { registerUser, logInUser, logoutUser, updateUser, postMobTimer};
 }
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);

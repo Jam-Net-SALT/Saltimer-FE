@@ -20,6 +20,9 @@ export class SaltimerApi extends HttpClientBase {
 
   public getLoggedInUser = () => this.instance.get<User>(`/auth/user`);
 
+  public postMobTimer = (mobSession: MobSession) =>
+  this.instance.post<MobSession>(`/mobtimer`, mobSession);
+
   public getMobTimerSessions = () =>
     this.instance.get<MobSession[]>(`/mobtimer`);
 
