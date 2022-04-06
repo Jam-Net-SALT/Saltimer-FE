@@ -4,12 +4,13 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "../../components/Layout";
 import AuthPage from "../Auth";
 import HomePage from "../Home";
-import SettingsPage from "../Settings";
+import SessionPage from "../Session";
 import JoinSessionPage from "../JoinSession";
 import { useDispatch, useSelector } from "react-redux";
 import { selectThemeScheme, toggleColorScheme } from "../../store/SiteConfig";
 import { AuthProvider } from "../../services/AuthProvider";
 import ProtectedRoute from "../../components/ProtectedRoute";
+import { SaltimerProvider } from "../../services/SaltimerProvider";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -24,21 +25,23 @@ const App = () => {
         <AuthProvider>
           <Layout>
             <Container>
-              <Routes>
-                <Route
-                  path='/'
-                  element={<ProtectedRoute render={<HomePage />} />}
-                />
-                <Route path='/auth' element={<AuthPage />} />
-                <Route
-                  path='/settings'
-                  element={<ProtectedRoute render={<SettingsPage />} />}
-                />
-                <Route
-                  path='/session/:id'
-                  element={<ProtectedRoute render={<JoinSessionPage />} />}
-                />
-              </Routes>
+              <SaltimerProvider>
+                <Routes>
+                  <Route
+                    path='/'
+                    element={<ProtectedRoute render={<HomePage />} />}
+                  />
+                  <Route path='/auth' element={<AuthPage />} />
+                  <Route
+                    path='/join'
+                    element={<ProtectedRoute render={<JoinSessionPage />} />}
+                  />
+                  <Route
+                    path='/session/:id'
+                    element={<ProtectedRoute render={<SessionPage />} />}
+                  />
+                </Routes>
+              </SaltimerProvider>
             </Container>
           </Layout>
         </AuthProvider>

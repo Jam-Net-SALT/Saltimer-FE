@@ -8,7 +8,6 @@ const ProtectedRoute = ({ render }: { render: ReactChild }) => {
 
   let location = useLocation();
 
-  console.log("Current user: ", user);
   if (!user) {
     return <Navigate to='/auth' state={{ from: location }} replace />;
   }

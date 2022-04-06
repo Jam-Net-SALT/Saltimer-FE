@@ -17,13 +17,14 @@ export const HomeNavIcon = () => {
       style={{ display: "flex", alignItems: "center" }}
       component={Link}
       to='/'
-      color={'orange'}
+      color={"orange"}
     >
       <ActionIcon>
         <Home size={40} />
       </ActionIcon>
-      <Text variant={"gradient"}
-            gradient={{from: 'orange', to: 'red'}}>Home</Text>
+      <Text variant={"gradient"} gradient={{ from: "orange", to: "red" }}>
+        Home
+      </Text>
     </Anchor>
   );
 };
@@ -33,14 +34,15 @@ export const SearchNavIcon = () => {
     <Anchor
       style={{ display: "flex", alignItems: "center" }}
       component={Link}
-      to='session/TestUrl'
-      color={'orange'}
+      color='orange'
+      to='join'
     >
       <ActionIcon>
         <Search size={40} />
       </ActionIcon>
-      <Text variant={"gradient"}
-            gradient={{from: 'orange', to: 'red'}}>Join session</Text>
+      <Text variant={"gradient"} gradient={{ from: "orange", to: "red" }}>
+        Join session
+      </Text>
     </Anchor>
   );
 };
@@ -51,13 +53,14 @@ export const SettingsNavIcon = () => {
       style={{ display: "flex", alignItems: "center" }}
       component={Link}
       to='/settings'
-      color={'orange'}
+      color={"orange"}
     >
       <ActionIcon>
         <Settings size={40} />
       </ActionIcon>
-      <Text variant={"gradient"}
-            gradient={{from: 'orange', to: 'red'}}>Settings</Text>
+      <Text variant={"gradient"} gradient={{ from: "orange", to: "red" }}>
+        Settings
+      </Text>
     </Anchor>
   );
 };
@@ -104,4 +107,4 @@ export const MobTimerPlayButton = (props: MobTimerButtonProps) => {
       <PlayerPlay size={100} color='white' />
     </ActionIcon>
   );
-}
+};

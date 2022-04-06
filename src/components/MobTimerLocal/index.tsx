@@ -1,7 +1,7 @@
-import { Progress, Title } from "@mantine/core";
-import { MutableRefObject, useRef, useState } from "react";
+import { Center, Grid, Progress, Title } from "@mantine/core";
+import React, { MutableRefObject, useRef, useState } from "react";
 import Countdown, { CountdownTimeDelta } from "react-countdown";
-import { useSpeechSynthesis } from 'react-speech-kit';
+import { useSpeechSynthesis } from "react-speech-kit";
 import { addMinutes, millisecondsToSeconds } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,7 +12,7 @@ import {
 import { MobTimerPauseButton, MobTimerPlayButton } from "../ActionIconButtons";
 import useStyles from "./style";
 
-const MobTimer = () => {
+const MobTimerLocal = () => {
   const { classes } = useStyles();
   const session = useSelector(selectLocalMobSession);
   const dispatch = useDispatch();
@@ -25,13 +25,17 @@ const MobTimer = () => {
   );
 
   const getNextDriver = session.members.find(
-    (m) => m.turn === (session.currentTurn + 1 >= session.members.length ? 0 : session.currentTurn + 1)
+    (m) =>
+      m.turn ===
+      (session.currentTurn + 1 >= session.members.length
+        ? 0
+        : session.currentTurn + 1)
   );
 
   const timerCompleteHandler = (p: CountdownTimeDelta) => {
     const speechNxtDriver = `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name} time.`;
     speak({ text: speechNxtDriver });
-    getTimerApi().pause();
+    getTimerApi().start();
     dispatch(stepToNextDriver());
   };
 
@@ -64,7 +68,13 @@ const MobTimer = () => {
       onComplete={timerCompleteHandler}
       renderer={({ total }: { total: string | number | Date }) => (
         <div style={{ width: "50%" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             {isPaused ? (
               <MobTimerPlayButton handler={timerPlayHandler} />
             ) : (
@@ -77,11 +87,11 @@ const MobTimer = () => {
             </Title>
           </div>
           <Progress
-            mt="md"
-            size="xl"
-            radius="xl"
+            mt='md'
+            size='xl'
+            radius='xl'
             value={getTimerPercentage(total)}
-            color="#FF7A62"
+            color='#FF7A62'
           />
         </div>
       )}
@@ -89,4 +99,4 @@ const MobTimer = () => {
   );
 };
 
-export default MobTimer;
+export default MobTimerLocal;

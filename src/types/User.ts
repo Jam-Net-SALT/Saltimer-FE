@@ -5,7 +5,7 @@ export interface AnonymsUser {
 }
 
 export interface User {
-  id: 0;
+  id: number;
   username: string;
   firstName: string;
   lastName: string;
