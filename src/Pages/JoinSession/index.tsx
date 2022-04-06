@@ -89,14 +89,14 @@ function JoinSessionPage() {
       <Center pt='md'>
         <Text className={classes.errorMsg}> {searchError} </Text>
       </Center>
-      <Grid className={classes.listContainer}>
+      <Grid columns={12} className={classes.listContainer}>
         {mobSessions.length === 0 ? (
           <Grid.Col className={classes.emptyListText}>
             <Title order={3}>No mob session found</Title>
           </Grid.Col>
         ) : (
           mobSessions.map((m) => (
-            <Grid.Col key={uuid()}>
+            <Grid.Col span={4} key={uuid()}>
               <Card shadow='lg' radius='lg' className={classes.sessionCard}>
                 <Card.Section p='lg'>
                   <Center>

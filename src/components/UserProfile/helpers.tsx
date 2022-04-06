@@ -32,7 +32,7 @@ export function ImageUploadIcon({
     return <Photo {...props} />;
 }
 
-export let userInitialValues: User = {
+export const userInitialValues: User = {
     id: 0,
     username: '',
     firstName: '',

@@ -6,6 +6,7 @@ import {
   PlayerPause,
   PlayerPlay,
   Search,
+  LayoutGridAdd,
   Settings,
   Sun,
 } from "tabler-icons-react";
@@ -60,6 +61,24 @@ export const SettingsNavIcon = () => {
       </ActionIcon>
       <Text variant={"gradient"} gradient={{ from: "orange", to: "red" }}>
         Settings
+      </Text>
+    </Anchor>
+  );
+};
+
+export const AdMobIcon = () => {
+  return (
+    <Anchor
+      style={{ display: "flex", alignItems: "center" }}
+      component={Link}
+      to='/addMob'
+      color={"orange"}
+    >
+      <ActionIcon>
+        <LayoutGridAdd size={40} />
+      </ActionIcon>
+      <Text variant={"gradient"} gradient={{ from: "orange", to: "red" }}>
+        Add Mob
       </Text>
     </Anchor>
   );

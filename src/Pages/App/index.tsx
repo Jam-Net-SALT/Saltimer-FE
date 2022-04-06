@@ -6,11 +6,13 @@ import AuthPage from "../Auth";
 import HomePage from "../Home";
 import SessionPage from "../Session";
 import JoinSessionPage from "../JoinSession";
+import Settings from "../Settings";
 import { useDispatch, useSelector } from "react-redux";
 import { selectThemeScheme, toggleColorScheme } from "../../store/SiteConfig";
 import { AuthProvider } from "../../services/AuthProvider";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { SaltimerProvider } from "../../services/SaltimerProvider";
+import AddMob from "../AddMob";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,6 +37,14 @@ const App = () => {
                   <Route
                     path='/join'
                     element={<ProtectedRoute render={<JoinSessionPage />} />}
+                  />
+                  <Route
+                    path='/settings'
+                    element={<ProtectedRoute render={<Settings />} />}
+                  />
+                   <Route
+                    path='/addMob'
+                    element={<ProtectedRoute render={<AddMob />} />}
                   />
                   <Route
                     path='/session/:id'
