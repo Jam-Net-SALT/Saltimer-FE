@@ -19,8 +19,10 @@ import {
 import { Bulb } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../types/User";
+import useStyles from "./style";
 
 const SessionPage = () => {
+  const { classes } = useStyles();
   const navigator = useNavigate();
   const hub = useContext<SaltimerContextInterface | null>(SaltimerContext);
 
@@ -62,7 +64,7 @@ const SessionPage = () => {
   return (
     <Grid justify='center' pt='lg'>
       <Center component={Grid.Col} pb='xl'>
-        <Title>{hub.sessionInfo?.displayName}</Title>
+        <Title className={classes.title}>{hub.sessionInfo?.displayName}</Title>
       </Center>
       <Center component={Grid.Col} pb='xl'>
         <Text color='orange' pr='lg'>
@@ -78,7 +80,7 @@ const SessionPage = () => {
       </Center>
 
       <Center component={Grid.Col}>
-        <Title order={2} pr='lg'>
+        <Title order={2} pr='lg' className={classes.text}>
           Members
         </Title>
       </Center>
@@ -86,7 +88,7 @@ const SessionPage = () => {
         <MobMemberRemote key={uuid()} user={user} />
       ))}
       <Center component={Grid.Col} pb='xl'>
-        <Title order={5} pr='lg'>
+        <Title order={5} pr='lg' className={classes.text}>
           offline members
         </Title>
 
