@@ -1,15 +1,11 @@
-import { Center, Grid, Progress, Title } from "@mantine/core";
-import React, { MutableRefObject, useRef, useState } from "react";
+import { Progress, Title } from "@mantine/core";
+import { MutableRefObject, useRef, useState } from "react";
 import Countdown, { CountdownTimeDelta } from "react-countdown";
 import { useSpeechSynthesis } from "react-speech-kit";
 import {
   addMinutes,
-  differenceInMilliseconds,
   differenceInMinutes,
-  getMinutes,
   millisecondsToSeconds,
-  sub,
-  subMinutes,
 } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -49,11 +45,13 @@ const MobTimerLocal = () => {
   };
 
   const timerPlayHandler = () => {
+    dispatch(startMobTimer());
     getTimerApi().start();
     setIsPaused(false);
   };
 
   const timerPauseHandler = () => {
+    dispatch(pauseMobTimer());
     getTimerApi().pause();
     setIsPaused(true);
   };
@@ -97,8 +95,6 @@ const MobTimerLocal = () => {
       autoStart={false}
       zeroPadTime={2}
       ref={timerRef}
-      onStart={() => dispatch(startMobTimer())}
-      onPause={() => dispatch(pauseMobTimer())}
       onComplete={timerCompleteHandler}
       renderer={({ total }: { total: string | number | Date }) => (
         <div style={{ width: "50%" }}>

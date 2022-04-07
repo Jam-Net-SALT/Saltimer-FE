@@ -6,6 +6,7 @@ import {
   Center,
   Grid,
   Notification,
+  Text,
   Title,
 } from "@mantine/core";
 import { useContext, useEffect } from "react";
@@ -17,6 +18,7 @@ import {
 } from "../../services/SaltimerProvider";
 import { Bulb } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
+import { User } from "../../types/User";
 
 const SessionPage = () => {
   const navigator = useNavigate();
@@ -30,12 +32,16 @@ const SessionPage = () => {
     return <h1> Session Not found</h1>;
   }
 
-  const getCurrentDriver = hub.onlineMember?.find(
-    (m) => m.username === hub.sessionTimer?.currentDriver
-  );
+  const getCurrentDriver = (): User | undefined => {
+    if (hub?.sessionTimer && hub?.onlineMember) {
+      return hub?.onlineMember[
+        hub.sessionTimer?.totalRoundCount % hub?.onlineMember?.length
+      ];
+    }
+  };
 
   const geNoneDriverMembersList = hub.onlineMember?.filter(
-    (m) => m.username !== hub.sessionTimer?.currentDriver
+    (m) => m.username !== getCurrentDriver()?.username
   );
 
   const getOffLineMembers = hub.sessionInfo?.users.filter(
@@ -59,7 +65,13 @@ const SessionPage = () => {
         <Title>{hub.sessionInfo?.displayName}</Title>
       </Center>
       <Center component={Grid.Col} pb='xl'>
-        <MobMemberRemote key={uuid()} user={getCurrentDriver} />
+        <Text color='orange' pr='lg'>
+          Invitation token:
+        </Text>
+        <span>{hub.sessionInfo?.uniqueId}</span>
+      </Center>
+      <Center component={Grid.Col} pb='xl'>
+        <MobMemberRemote key={uuid()} user={getCurrentDriver()} />
       </Center>
       <Center component={Grid.Col} pb='xl'>
         <MobTimerRemote />

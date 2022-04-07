@@ -15,6 +15,7 @@ export interface SessionTimerResponse {
   pausedTime: Date;
   startTime: Date;
   totalRoundCount: number;
+  isPaused: boolean;
 }
 
 export interface ServerInfoResponse {

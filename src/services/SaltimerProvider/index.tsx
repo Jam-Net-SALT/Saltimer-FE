@@ -4,7 +4,10 @@ import {
   LogLevel,
   HubConnection,
 } from "@microsoft/signalr";
-import { MobTimerConnection } from "../../Pages/JoinSession/types";
+import {
+  MobTimerConnection,
+  UpdateSessionConnection,
+} from "../../Pages/JoinSession/types";
 import {
   ServerInfoResponse,
   SessionInfoResponse,
@@ -22,18 +25,24 @@ export interface SaltimerContextInterface {
   setUpConnection: () => Promise<void>;
   disconnectHub: () => void;
   joinSession: (data: MobTimerConnection) => Promise<void>;
+  playSessionTimer: (data: UpdateSessionConnection) => Promise<void>;
+  pauseSessionTimer: (data: UpdateSessionConnection) => Promise<void>;
+  stepToNextDriver: (data: UpdateSessionConnection) => Promise<void>;
 }
 
 enum HubEndPints {
   ReceiveSession = "ReceiveSession",
   JoinSession = "JoinSession",
+  PlayTimer = "PlayTimer",
+  PauseTimer = "PauseTimer",
   ReceiveOnlineMember = "ReceiveOnlineMember",
   NotifyClient = "NotifyClient",
+  NextDriver = "NextDriver",
   ReceiveUserLeaveSession = "ReceiveUserLeaveSession",
+  ReceiveSessionUpdate = "ReceiveSessionUpdate",
 }
 
 function SaltimerActions(): SaltimerContextInterface {
-  const navigator = useNavigate();
   const [connection, setConnection] = useState<HubConnection | undefined>();
   const [sessionInfo, setSessionInfo] = useState<
     SessionInfoResponse | undefined
@@ -79,6 +88,14 @@ function SaltimerActions(): SaltimerContextInterface {
       setOnlineMember(onlineUsers);
     });
 
+    hub.on(
+      HubEndPints.ReceiveSessionUpdate,
+      (sessionTimer: SessionTimerResponse) => {
+        console.log("Session update: ", sessionTimer);
+        setSessionTimer(sessionTimer);
+      }
+    );
+
     hub.on(HubEndPints.NotifyClient, ({ ...info }: ServerInfoResponse) => {
       setServerInfo(info);
       console.log("info: ", info);
@@ -108,6 +125,18 @@ function SaltimerActions(): SaltimerContextInterface {
     window.localStorage.setItem("session", await JSON.stringify(data));
   };
 
+  const playSessionTimer = async (data: UpdateSessionConnection) => {
+    await connection?.invoke(HubEndPints.PlayTimer, data);
+  };
+
+  const pauseSessionTimer = async (data: UpdateSessionConnection) => {
+    await connection?.invoke(HubEndPints.PauseTimer, data);
+  };
+
+  const stepToNextDriver = async (data: UpdateSessionConnection) => {
+    await connection?.invoke(HubEndPints.NextDriver, data);
+  };
+
   const clearServerInfo = () => setServerInfo(undefined);
 
   return {
@@ -119,6 +148,9 @@ function SaltimerActions(): SaltimerContextInterface {
     serverInfo,
     clearServerInfo,
     disconnectHub,
+    playSessionTimer,
+    pauseSessionTimer,
+    stepToNextDriver,
   };
 }
 
