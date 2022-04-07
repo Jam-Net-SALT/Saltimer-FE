@@ -82,7 +82,7 @@ function LoginForm() {
         <Space h={"xl"} />
         <Button
           variant={"gradient"}
-          gradient={{from: 'orange', to: 'red'}}
+          gradient={{ from: "orange", to: "red" }}
           fullWidth
           type={"submit"}
           disabled={loading}
@@ -90,7 +90,7 @@ function LoginForm() {
           Log in
         </Button>
         <Space h={"sm"} />
-        <Divider my='xs' label='Or' labelPosition='center' />
+        <Divider my='xs' labelPosition='center' />
         <Space h={"sm"} />
       </form>
     </>

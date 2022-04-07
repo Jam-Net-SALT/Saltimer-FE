@@ -1,31 +1,26 @@
 import {
   Anchor,
   Avatar,
-  Burger,
   Button,
+  Center,
   Header,
-  Title,
-  useMantineTheme,
+  Modal,
+  Text,
 } from "@mantine/core";
-import { useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AuthContext, AuthContextInterface } from "../../services/AuthProvider";
 import { selectUser } from "../../store/CurrentUser";
-import {
-  selectShowSideBar,
-  selectThemeScheme,
-  toggleSideBar,
-} from "../../store/SiteConfig";
+import { selectThemeScheme } from "../../store/SiteConfig";
 import { ThemeSchemeToggleIcon } from "../ActionIconButtons";
+import UserProfile from "../UserProfile";
 import useStyles from "./style";
 
 function CustomHeader() {
   const { classes } = useStyles();
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
-  const theme = useMantineTheme();
-  const showSideBar = useSelector(selectShowSideBar);
+  const [modalOpened, setModalOpened] = useState(false);
   const themeScheme = useSelector(selectThemeScheme);
   const auth = useContext<AuthContextInterface | null>(AuthContext);
 
@@ -34,38 +29,40 @@ function CustomHeader() {
   };
 
   return (
-    <Header height={70} p='s'>
+    <Header height={70} p='sx'>
       <div className={classes.wrapper}>
+        <Modal
+          opened={modalOpened}
+          onClose={() => setModalOpened(false)}
+          title='Create new mobtimer'
+        >
+          <UserProfile onClose={() => setModalOpened(false)} />
+        </Modal>
+        <Anchor component={Link} to='/' className={classes.logoLink} pt='xs'>
+          <img src={"/saltimer.png"} alt='Saltimer' width={140} height='auto' />
+        </Anchor>
         <div className={classes.container}>
-          <Burger
-            opened={showSideBar}
-            onClick={() => dispatch(toggleSideBar())}
-            size='sm'
-            color={theme.colors.gray[6]}
-            mr='xs'
-          />
-          <Anchor component={Link} to='/'>
-            <img src={'/saltimer.png'} alt='Saltimer' width={200} height={'auto'} />
-          </Anchor>
-        </div>
-        <div className={classes.container}>
+          <ThemeSchemeToggleIcon />
           {user ? (
             <>
-              <Anchor component={Link} to='/settings'>
+              <Center
+                onClick={() => setModalOpened(true)}
+                className={classes.link}
+              >
                 <Avatar
                   src={user?.profileImage}
                   alt={user?.username}
                   radius='lg'
                   size='sm'
-                  mr='sm'
+                  mr='xs'
                   color={themeScheme === "dark" ? "orange" : "orange"}
                 >
                   {user?.fullName.match(/\b(\w)/g)}
                 </Avatar>
-              </Anchor>
+                <Text mr='xs'>{user.fullName}</Text>
+              </Center>
               <Button
                 variant='outline'
-                mr='md'
                 radius='lg'
                 color={themeScheme === "dark" ? "orange" : "orange"}
                 onClick={onLogout}
@@ -84,11 +81,9 @@ function CustomHeader() {
               Login / Register
             </Anchor>
           )}
-
-          <ThemeSchemeToggleIcon />
         </div>
       </div>
-    </Header >
+    </Header>
   );
 }
 

@@ -5,8 +5,10 @@ import { MobMemberLocal } from "../../components/MobMember";
 import { selectLocalMobSession } from "../../store/LocalMobSession";
 import MobTimerLocal from "../../components/MobTimerLocal";
 import AddNewMemberForm from "../../components/AddNewMember";
+import useStyles from "./style";
 
-const HomePage = () => {
+const LocalSession = () => {
+  const { classes } = useStyles();
   const localMobSession = useSelector(selectLocalMobSession);
 
   const getCurrentDriver = localMobSession.members.find(
@@ -19,7 +21,7 @@ const HomePage = () => {
   return (
     <Grid justify='center'>
       <Center component={Grid.Col} pb='xl'>
-        <Title>Driver</Title>
+        <Title className={classes.title}>Driver</Title>
       </Center>
       <Center component={Grid.Col} pb='xl'>
         <MobMemberLocal user={getCurrentDriver} />
@@ -37,4 +39,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default LocalSession;

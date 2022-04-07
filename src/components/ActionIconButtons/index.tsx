@@ -9,7 +9,7 @@ import {
   LayoutGridAdd,
   Settings,
   Sun,
-  QuestionMark
+  QuestionMark,
 } from "tabler-icons-react";
 import { MobTimerButtonProps } from "./type";
 
@@ -69,19 +69,19 @@ export const SettingsNavIcon = () => {
 
 export const AboutIcon = () => {
   return (
-      <Anchor
-          style={{ display: "flex", alignItems: "center" }}
-          component={Link}
-          to='/about'
-          color={"orange"}
-      >
-        <ActionIcon>
-          <QuestionMark size={40} />
-        </ActionIcon>
-        <Text variant={"gradient"} gradient={{ from: "orange", to: "red" }}>
-          About
-        </Text>
-      </Anchor>
+    <Anchor
+      style={{ display: "flex", alignItems: "center" }}
+      component={Link}
+      to='/about'
+      color={"orange"}
+    >
+      <ActionIcon>
+        <QuestionMark size={40} />
+      </ActionIcon>
+      <Text variant={"gradient"} gradient={{ from: "orange", to: "red" }}>
+        About
+      </Text>
+    </Anchor>
   );
 };
 
@@ -109,8 +109,8 @@ export const ThemeSchemeToggleIcon = () => {
 
   return (
     <ActionIcon
-      variant='outline'
-      color={isDarkMode ? "orange" : "violet"}
+      mr='lg'
+      color={isDarkMode ? "orange" : "yellow"}
       onClick={() => toggleColorScheme()}
       title='Toggle color scheme'
     >

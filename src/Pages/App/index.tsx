@@ -3,17 +3,14 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "../../components/Layout";
 import AuthPage from "../Auth";
-import HomePage from "../Home";
+import LocalSession from "../LocalSession";
 import SessionPage from "../Session";
 import JoinSessionPage from "../JoinSession";
-import Settings from "../Settings";
 import { useDispatch, useSelector } from "react-redux";
 import { selectThemeScheme, toggleColorScheme } from "../../store/SiteConfig";
 import { AuthProvider } from "../../services/AuthProvider";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { SaltimerProvider } from "../../services/SaltimerProvider";
-import AddMob from "../AddMob";
-import AboutPage from "../About";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -30,30 +27,20 @@ const App = () => {
             <Container>
               <SaltimerProvider>
                 <Routes>
+                  <Route path='/auth' element={<AuthPage />} />
+
                   <Route
                     path='/'
-                    element={<ProtectedRoute render={<HomePage />} />}
-                  />
-                  <Route path='/auth' element={<AuthPage />} />
-                  <Route
-                    path='/join'
                     element={<ProtectedRoute render={<JoinSessionPage />} />}
                   />
                   <Route
-                    path='/settings'
-                    element={<ProtectedRoute render={<Settings />} />}
+                    path='/local/session'
+                    element={<ProtectedRoute render={<LocalSession />} />}
                   />
-                   <Route
-                    path='/addMob'
-                    element={<ProtectedRoute render={<AddMob />} />}
-                  />
+
                   <Route
                     path='/session/:id'
                     element={<ProtectedRoute render={<SessionPage />} />}
-                  />
-                  <Route 
-                      path='/about'
-                      element={<AboutPage />}
                   />
                 </Routes>
               </SaltimerProvider>

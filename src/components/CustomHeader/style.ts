@@ -11,10 +11,21 @@ const useStyles = createStyles((theme, _params, getRef) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    alignSelf: "center",
+    paddingRight: "2rem",
   },
   textColor: {
-    color: "#FF7A62"
-  }
+    color: theme.colorScheme === "light" ? "rgba(0, 0, 0, 0.87)" : "#FF7A62",
+  },
+  link: {
+    color: theme.colorScheme === "light" ? "rgba(0, 0, 0, 0.87)" : "#FF7A62",
+    textDecoration: "none",
+    display: "flex",
+  },
+  logoLink: {
+    display: "flex",
+    alignItems: "center",
+  },
 }));
 
 export default useStyles;

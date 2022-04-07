@@ -3,7 +3,7 @@ import {
   Button,
   Card,
   Center,
-  Grid,
+  Modal,
   Text,
   TextInput,
   Title,
@@ -13,6 +13,7 @@ import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
+import AddNewMob from "../../components/AddNewMob";
 import { SaltimerApi } from "../../services/SaltimerApi";
 import {
   SaltimerContext,
@@ -27,6 +28,7 @@ function JoinSessionPage() {
   const { classes } = useStyles();
   const navigator = useNavigate();
   const user = useSelector(selectUser);
+  const [modalOpened, setModalOpened] = useState(false);
   const [searchError, setSearchError] = useState("");
   const [jwtToken] = useState(window.localStorage.getItem("auth"));
   const [invitationToken, setInvitationToken] = useState("");
@@ -85,52 +87,85 @@ function JoinSessionPage() {
           placeholder='Invitation token'
           mr='lg'
           value={invitationToken}
+          variant='filled'
+          className={classes.inputText}
           onChange={(e) => setInvitationToken(e.target.value)}
         />
         <Button onClick={joinMobSessionsFromToken}> Join session </Button>
       </Center>
       <Center pt='md'>
-        <Text className={classes.errorMsg}> {searchError} </Text>
+        <div>
+          <Text className={classes.errorMsg}> {searchError} </Text>
+        </div>
       </Center>
-      <Grid columns={12} className={classes.listContainer}>
+
+      <Modal
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        title='Create new mobtimer'
+      >
+        <AddNewMob onClose={() => setModalOpened(false)} />
+      </Modal>
+      <Center>
+        <Button
+          radius='lg'
+          color='green'
+          m='lg'
+          onClick={() => setModalOpened(true)}
+        >
+          Create new mob timer
+        </Button>
+        <Button
+          radius='lg'
+          color='orange'
+          m='lg'
+          onClick={() => navigator("/local/session")}
+        >
+          Start local session
+        </Button>
+      </Center>
+
+      <Center className={classes.listContainer}>
         {mobSessions.length === 0 ? (
-          <Grid.Col className={classes.emptyListText}>
-            <Title order={3}>No mob session found</Title>
-          </Grid.Col>
+          <Title order={3}>No mob session found</Title>
         ) : (
           mobSessions.map((m) => (
-            <Grid.Col span={4} key={uuid()}>
-              <Card shadow='lg' radius='lg' className={classes.sessionCard}>
-                <Card.Section p='lg'>
-                  <Center>
-                    <Title order={3} align='center' pr='lg'>
-                      {m.displayName}
-                    </Title>
-                    <Badge color='orange' variant='light'>
-                      4 members
-                    </Badge>
-                  </Center>
-                </Card.Section>
+            <Card
+              key={uuid()}
+              shadow='lg'
+              radius='lg'
+              m='lg'
+              className={classes.sessionCard}
+            >
+              <Card.Section p='lg'>
+                <Center>
+                  <Title order={3} align='center' pr='lg'>
+                    {m.displayName}
+                  </Title>
+                  <Badge color='orange' variant='light'>
+                    4 members
+                  </Badge>
+                </Center>
+              </Card.Section>
 
-                <Button
-                  variant='light'
-                  color='blue'
-                  fullWidth
-                  style={{ marginTop: 14 }}
-                  onClick={() =>
-                    joinMobSession(m.id, {
-                      UserId: user?.id,
-                      Uuid: m.uniqueId,
-                    })
-                  }
-                >
-                  Join session
-                </Button>
-              </Card>
-            </Grid.Col>
+              <Button
+                variant='light'
+                color='blue'
+                fullWidth
+                style={{ marginTop: 14 }}
+                onClick={() =>
+                  joinMobSession(m.id, {
+                    UserId: user?.id,
+                    Uuid: m.uniqueId,
+                  })
+                }
+              >
+                Join session
+              </Button>
+            </Card>
           ))
         )}
-      </Grid>
+      </Center>
     </div>
   );
 }
