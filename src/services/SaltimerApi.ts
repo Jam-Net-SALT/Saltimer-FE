@@ -7,7 +7,7 @@ import { HttpClientBase } from "../utils/HttpClientBase";
 
 export class SaltimerApi extends HttpClientBase {
   public constructor(jwtToken: string) {
-    super(process.env.REACT_APP_SALTIMER_API, jwtToken);
+    super("https://saltimer-api.herokuapp.com/api", jwtToken);
   }
   public registerUser = (signUpFormValues: SignUpFormProps) =>
     this.instance.post<User>(`/auth/register`, signUpFormValues);
