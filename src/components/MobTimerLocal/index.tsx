@@ -36,10 +36,19 @@ const MobTimerLocal = () => {
         ? 0
         : session.currentTurn + 1)
   );
+  
+  const messages = [
+    `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name}s turn.`,
+    `Hello ${getCurrentDriver?.name} you scallywanker, your time is over. Now its ${getNextDriver?.name}s turn.`,
+    `Goodday ${getCurrentDriver?.name} mate your time is ovah. Now its ${getNextDriver?.name}s turn.`,
+    `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name}s turn. Please hurry up slowpokes.`,
+    `Soisoisoisoi ${getCurrentDriver?.name} your time is up. Now its ${getNextDriver?.name}s turn. Godspeed.`,
+  ]
+
+  const randomMessage= messages[Math.floor(Math.random()*messages.length)];
 
   const timerCompleteHandler = (p: CountdownTimeDelta) => {
-    const speechNxtDriver = `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name}s turn.`;
-    speak({ text: speechNxtDriver });
+    speak({ text: randomMessage });
     getTimerApi().start();
     dispatch(stepToNextDriver());
   };

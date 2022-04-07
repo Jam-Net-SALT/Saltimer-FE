@@ -51,15 +51,22 @@ const MobTimerRemote = () => {
     }
   };
 
+  const messages = [
+    `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name}s turn.`,
+    `Hello ${getCurrentDriver?.name} you scallywanker, your time is over. Now its ${getNextDriver?.name}s turn.`,
+    `Goodday ${getCurrentDriver?.name} mate your time is ovah. Now its ${getNextDriver?.name}s turn.`,
+    `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name}s turn. Please hurry up slowpokes.`,
+    `Soisoisoisoi ${getCurrentDriver?.name} your time is up. Now its ${getNextDriver?.name}s turn. Godspeed.`,
+  ]
+
+  const randomMessage= messages[Math.floor(Math.random()*messages.length)];
+
   const timerCompleteHandler = async () => {
     if (
       user?.username === getCurrentDriver()?.username ||
       user?.username === getNextDriver()?.username
     ) {
-      const speechNxtDriver = `Hi ${
-        getCurrentDriver()?.fullName
-      } your time is over. Now its ${getNextDriver()?.fullName}s turn.`;
-      speak({ text: speechNxtDriver });
+      speak({ text: randomMessage });
     }
 
     if (user?.username === getCurrentDriver()?.username) {
