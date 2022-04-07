@@ -58,7 +58,7 @@ const MobTimerRemote = () => {
     ) {
       const speechNxtDriver = `Hi ${
         getCurrentDriver()?.fullName
-      } your time is over. Now its ${getNextDriver()?.fullName} time.`;
+      } your time is over. Now its ${getNextDriver()?.fullName}s turn.`;
       speak({ text: speechNxtDriver });
     }
 

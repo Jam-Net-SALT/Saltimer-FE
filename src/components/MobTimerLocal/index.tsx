@@ -38,7 +38,7 @@ const MobTimerLocal = () => {
   );
 
   const timerCompleteHandler = (p: CountdownTimeDelta) => {
-    const speechNxtDriver = `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name} time.`;
+    const speechNxtDriver = `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name}s turn.`;
     speak({ text: speechNxtDriver });
     getTimerApi().start();
     dispatch(stepToNextDriver());
