@@ -51,22 +51,34 @@ const MobTimerRemote = () => {
     }
   };
 
-  const messages = [
-    `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name}s turn.`,
-    `Hello ${getCurrentDriver?.name} you scallywanker, your time is over. Now its ${getNextDriver?.name}s turn.`,
-    `Goodday ${getCurrentDriver?.name} mate your time is ovah. Now its ${getNextDriver?.name}s turn.`,
-    `Hi ${getCurrentDriver?.name} your time is over. Now its ${getNextDriver?.name}s turn. Please hurry up slowpokes.`,
-    `Soisoisoisoi ${getCurrentDriver?.name} your time is up. Now its ${getNextDriver?.name}s turn. Godspeed.`,
-  ]
+  const messages = () :string[] | undefined => {
+    const current = getCurrentDriver()?.firstName;
+    const next = getNextDriver()?.firstName;
+    
+  if(current && next){
+    return [
+      `Hi ${current} your time is over. Now its ${next}s turn.`,
+      `Hello ${current} you scallywanker, your time is over. Now its ${next}s turn.`,
+      `Goodday ${current} mate your time is ovah. Now its ${next}s turn.`,
+      `Hi ${current} your time is over. Now its ${next}s turn. Please hurry up slowpokes.`,
+      `Soisoisoisoi ${current} your time is up. Now its ${next}s turn. Godspeed.`,
+    ]
+  }
+  }
 
-  const randomMessage= messages[Math.floor(Math.random()*messages.length)];
+  const randomMessage = () => {
+    
+    const randMessage = messages();
+    
+    if(randMessage) return randMessage[Math.floor(Math.random()*messages.length)]
+  };
 
   const timerCompleteHandler = async () => {
     if (
       user?.username === getCurrentDriver()?.username ||
       user?.username === getNextDriver()?.username
     ) {
-      speak({ text: randomMessage });
+      speak({ text: randomMessage() });
     }
 
     if (user?.username === getCurrentDriver()?.username) {

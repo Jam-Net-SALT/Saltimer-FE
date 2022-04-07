@@ -24,23 +24,23 @@ const initialState: LocalMobSessionState = {
   pausedTime: undefined,
   currentTurn: 0,
   breakMinutes: 10,
-  driverTime: 5,
+  driverTime: 1,
   breakRound: 2,
   members: [
     {
-      name: "John doe",
+      name: "Roberto Alkaysi",
       imageUrl:
         "https://spng.pngfind.com/pngs/s/5-52097_avatar-png-pic-vector-avatar-icon-png-transparent.png",
       turn: 0,
     },
     {
-      name: "Jane Doe",
+      name: "Lisa Larsson",
       imageUrl:
         "https://img.favpng.com/5/1/21/computer-icons-user-profile-avatar-female-png-favpng-cqykKc0Hpkh65ueWt6Nh2KFvS.jpg",
       turn: 1,
     },
     {
-      name: "Emma James",
+      name: "Johanna Olsson",
       imageUrl:
         "https://w7.pngwing.com/pngs/749/780/png-transparent-female-avatar-cartoon-user-avatar-purple-face-heroes.png",
       turn: 2,
