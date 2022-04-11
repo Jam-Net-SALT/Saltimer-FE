@@ -1,4 +1,5 @@
 export interface AnonymsUser {
+  id: string;
   name: string;
   imageUrl: string;
   turn: number | undefined;
