@@ -28,8 +28,6 @@ const EditLocalMember = (props: EditLocalMemberProps) => {
       id: props.user.id,
       turn: props.user.turn,
     };
-
-    console.log("Updated");
     dispatch(editMember(member));
     props.onClose();
   };

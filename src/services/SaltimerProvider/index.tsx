@@ -77,35 +77,29 @@ function SaltimerActions(): SaltimerContextInterface {
         sessionTimer: SessionTimerResponse
       ) => {
         setSessionInfo(sessionInfo);
-        console.log("sessionInfo: ", sessionInfo);
         setSessionTimer(sessionTimer);
-        console.log("sessionTimer: ", sessionTimer);
       }
     );
 
     hub.on(HubEndPints.ReceiveOnlineMember, (onlineUsers: User[]) => {
-      console.log("onlineUsers: ", onlineUsers);
       setOnlineMember(onlineUsers);
     });
 
     hub.on(
       HubEndPints.ReceiveSessionUpdate,
       (sessionTimer: SessionTimerResponse) => {
-        console.log("Session update: ", sessionTimer);
         setSessionTimer(sessionTimer);
       }
     );
 
     hub.on(HubEndPints.NotifyClient, ({ ...info }: ServerInfoResponse) => {
       setServerInfo(info);
-      console.log("info: ", info);
     });
 
     hub.on(
       HubEndPints.ReceiveUserLeaveSession,
       ({ ...info }: ServerInfoResponse) => {
         setServerInfo(info);
-        console.log("info: ", info);
       }
     );
   };

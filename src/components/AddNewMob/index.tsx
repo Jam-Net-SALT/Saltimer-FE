@@ -22,10 +22,8 @@ function AddNewMob({ onClose }: { onClose: () => void }) {
 
   const onSubmitHandler = async (values: MobSession) => {
     setLoading(true);
-    console.log("test", values);
     const data = await auth?.postMobTimer(values);
     setLoading(false);
-
     onClose();
     window.location.reload();
   };

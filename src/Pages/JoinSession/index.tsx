@@ -37,7 +37,6 @@ function JoinSessionPage() {
 
   useEffect(() => {
     const setup = async () => {
-      console.log("fetchUserSessions");
       await fetchUserSessions();
       console.log("Connecting...");
       await hub?.setUpConnection();
