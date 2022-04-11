@@ -18,15 +18,15 @@ export interface AuthContextInterface {
   registerUser: (values: SignUpFormProps) => Promise<boolean>;
   logInUser: (values: SignInFormProps) => Promise<boolean>;
   logoutUser: () => boolean;
-  updateUser:(values: User) => Promise<boolean>;
-  postMobTimer:(values: MobSession) => Promise<boolean>;
+  updateUser: (values: User) => Promise<boolean>;
+  postMobTimer: (values: MobSession) => Promise<boolean>;
 }
 
 function AuthActions(): AuthContextInterface {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const[token, setToken] = useState("");
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     const reAuthenticate = async (localJwtToken: string) => {
@@ -111,12 +111,13 @@ function AuthActions(): AuthContextInterface {
       window.localStorage.removeItem(user?.username);
       dispatch(resetCurrentUser());
       setToken("");
+      window.localStorage.removeItem("auth");
       return true;
     }
     return false;
   };
 
-  return { registerUser, logInUser, logoutUser, updateUser, postMobTimer};
+  return { registerUser, logInUser, logoutUser, updateUser, postMobTimer };
 }
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);

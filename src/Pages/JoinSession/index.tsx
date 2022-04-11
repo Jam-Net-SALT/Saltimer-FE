@@ -1,19 +1,11 @@
-import {
-  Badge,
-  Button,
-  Card,
-  Center,
-  Modal,
-  Text,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { Button, Center, Modal, Text, TextInput, Title } from "@mantine/core";
 import { AxiosError } from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import AddNewMob from "../../components/AddNewMob";
+import SessionCard from "../../components/SessionCard";
 import { SaltimerApi } from "../../services/SaltimerApi";
 import {
   SaltimerContext,
@@ -51,6 +43,14 @@ function JoinSessionPage() {
     }
   };
 
+  const leaveSessionHandler = async (sessionId: number, userId: number) => {
+    if (jwtToken) {
+      await new SaltimerApi(jwtToken).removeUserFromSession(sessionId, userId);
+      const response = await new SaltimerApi(jwtToken).getMobTimerSessions();
+      setMobSessions(response.data);
+    }
+  };
+
   const joinMobSessionsFromToken = async () => {
     try {
       if (jwtToken) {
@@ -69,14 +69,6 @@ function JoinSessionPage() {
 
       setSearchError(e.response.data.message);
     }
-  };
-
-  const joinMobSession = async (
-    id: number,
-    requestData: MobTimerConnection
-  ) => {
-    await hub?.joinSession(requestData);
-    navigator(`/session/${id}`);
   };
 
   return (
@@ -103,7 +95,12 @@ function JoinSessionPage() {
         onClose={() => setModalOpened(false)}
         title='Create new mobtimer'
       >
-        <AddNewMob onClose={() => setModalOpened(false)} />
+        <AddNewMob
+          onClose={() => {
+            setModalOpened(false);
+            fetchUserSessions();
+          }}
+        />
       </Modal>
       <Center>
         <Button
@@ -129,39 +126,11 @@ function JoinSessionPage() {
           <Title order={3}>No mob session found</Title>
         ) : (
           mobSessions.map((m) => (
-            <Card
+            <SessionCard
               key={uuid()}
-              shadow='lg'
-              radius='lg'
-              m='lg'
-              className={classes.sessionCard}
-            >
-              <Card.Section p='lg'>
-                <Center>
-                  <Title order={3} align='center' pr='lg'>
-                    {m.displayName}
-                  </Title>
-                  <Badge color='orange' variant='light'>
-                    4 members
-                  </Badge>
-                </Center>
-              </Card.Section>
-
-              <Button
-                variant='light'
-                color='blue'
-                fullWidth
-                style={{ marginTop: 14 }}
-                onClick={() =>
-                  joinMobSession(m.id, {
-                    UserId: user?.id,
-                    Uuid: m.uniqueId,
-                  })
-                }
-              >
-                Join session
-              </Button>
-            </Card>
+              session={m}
+              onRemove={leaveSessionHandler}
+            />
           ))
         )}
       </Center>

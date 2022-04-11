@@ -22,10 +22,12 @@ function AddNewMob({ onClose }: { onClose: () => void }) {
 
   const onSubmitHandler = async (values: MobSession) => {
     setLoading(true);
-    const data = await auth?.postMobTimer(values);
-    setLoading(false);
-    onClose();
-    window.location.reload();
+    const posted = await auth?.postMobTimer(values);
+
+    if (posted) {
+      setLoading(false);
+      onClose();
+    }
   };
 
   return (
