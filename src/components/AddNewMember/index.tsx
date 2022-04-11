@@ -7,6 +7,7 @@ import {
   addNewMember,
   selectLocalMobSession,
 } from "../../store/LocalMobSession";
+import { AnonymsUser } from "../../types/User";
 
 interface AddMemberUser {
   name: string;
@@ -15,7 +16,6 @@ interface AddMemberUser {
 const AddNewMemberForm = () => {
   const dispatch = useDispatch();
   const localMobSession = useSelector(selectLocalMobSession);
-  const [openNewMemberModal, setOpenNewMemberModal] = useState<boolean>(false);
 
   const form = useForm<AddMemberUser>({
     initialValues: { name: "" },
@@ -25,14 +25,14 @@ const AddNewMemberForm = () => {
   });
 
   const onSubmitHandler = (values: AddMemberUser) => {
-    dispatch(
-      addNewMember({
-        name: values.name,
-        imageUrl: "",
-        turn: localMobSession.members.length,
-      })
-    );
-    setOpenNewMemberModal(false);
+    const newMember: AnonymsUser = {
+      name: values.name,
+      imageUrl: "",
+      turn: localMobSession.members.length,
+      id: localMobSession.members.length.toString(),
+    };
+
+    dispatch(addNewMember(newMember));
   };
 
   return (
@@ -50,12 +50,13 @@ const AddNewMemberForm = () => {
         {...form.getInputProps("name")}
       />
 
-      <Button 
-          ml='xl' 
-          radius='xl' 
-          type={"submit"} 
-          variant={"gradient"}
-          gradient={{from: 'orange', to: 'red'}}>
+      <Button
+        ml='xl'
+        radius='xl'
+        type={"submit"}
+        variant={"gradient"}
+        gradient={{ from: "orange", to: "red" }}
+      >
         Add
       </Button>
     </form>

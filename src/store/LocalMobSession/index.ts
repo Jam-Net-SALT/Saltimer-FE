@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { stat } from "fs";
 import { AnonymsUser } from "../../types/User";
 import type { RootState } from "../index";
 
@@ -28,18 +29,21 @@ const initialState: LocalMobSessionState = {
   breakRound: 2,
   members: [
     {
-      name: "Roberto Alkaysi",
+      id: "1",
+      name: "Roberto Alkalis",
       imageUrl:
         "https://spng.pngfind.com/pngs/s/5-52097_avatar-png-pic-vector-avatar-icon-png-transparent.png",
       turn: 0,
     },
     {
+      id: "2",
       name: "Lisa Larsson",
       imageUrl:
         "https://img.favpng.com/5/1/21/computer-icons-user-profile-avatar-female-png-favpng-cqykKc0Hpkh65ueWt6Nh2KFvS.jpg",
       turn: 1,
     },
     {
+      id: "3",
       name: "Johanna Olsson",
       imageUrl:
         "https://w7.pngwing.com/pngs/749/780/png-transparent-female-avatar-cartoon-user-avatar-purple-face-heroes.png",
@@ -53,6 +57,10 @@ export const localMobSessionSlice = createSlice({
   initialState,
   reducers: {
     // Action to toggle between dark and light mode
+    setUpLocalMembers: (state, action: PayloadAction<AnonymsUser[]>) => {
+      state.members = [...action.payload];
+    },
+
     startMobTimer: (state) => {
       state.pausedTime = state.startTime;
       state.startTime = Date.now();
@@ -63,6 +71,15 @@ export const localMobSessionSlice = createSlice({
     addNewMember: (state, action: PayloadAction<AnonymsUser>) => {
       state.members = [...state.members, action.payload];
     },
+    removeMember: (state, action: PayloadAction<AnonymsUser>) => {
+      state.members = state.members.filter((u) => u.id !== action.payload.id);
+    },
+    editMember: (state, action: PayloadAction<AnonymsUser>) => {
+      const cleanState = state.members.filter(
+        (u) => u.id !== action.payload.id
+      );
+      state.members = [...cleanState, action.payload];
+    },
     stepToNextDriver: (state) => {
       if (state.currentTurn + 1 >= state.members.length) state.currentTurn = 0;
       else state.currentTurn = state.currentTurn + 1;
@@ -70,8 +87,15 @@ export const localMobSessionSlice = createSlice({
   },
 });
 
-export const { startMobTimer, pauseMobTimer, addNewMember, stepToNextDriver } =
-  localMobSessionSlice.actions;
+export const {
+  setUpLocalMembers,
+  startMobTimer,
+  pauseMobTimer,
+  addNewMember,
+  removeMember,
+  editMember,
+  stepToNextDriver,
+} = localMobSessionSlice.actions;
 
 export const selectLocalMobSession = (state: RootState) =>
   state.localMobSession;

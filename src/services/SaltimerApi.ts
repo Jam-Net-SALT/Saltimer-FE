@@ -1,3 +1,4 @@
+import internal from "stream";
 import { SignInFormProps } from "../components/LoginForm/helpers";
 import { SignUpFormProps } from "../components/SignupForm/helpers";
 import { MobSession, VipMobSession } from "../types/MobSession";
@@ -21,7 +22,7 @@ export class SaltimerApi extends HttpClientBase {
   public getLoggedInUser = () => this.instance.get<User>(`/auth/user`);
 
   public postMobTimer = (mobSession: MobSession) =>
-  this.instance.post<MobSession>(`/mobtimer`, mobSession);
+    this.instance.post<MobSession>(`/mobtimer`, mobSession);
 
   public getMobTimerSessions = () =>
     this.instance.get<MobSession[]>(`/mobtimer`);
@@ -29,5 +30,11 @@ export class SaltimerApi extends HttpClientBase {
   public joinMobTimerSession = (sessionToken: string) =>
     this.instance.post<VipMobSession>(`/sessionMember/vip`, {
       uuid: sessionToken,
+    });
+  public removeUserFromSession = (sessionId: number, userId: number) =>
+    this.instance.delete(`/sessionMember/${sessionId}`, {
+      data: {
+        userId: userId,
+      },
     });
 }

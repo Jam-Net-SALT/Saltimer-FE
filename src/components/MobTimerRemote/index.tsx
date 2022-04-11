@@ -24,7 +24,6 @@ const MobTimerRemote = () => {
   const timerRef = useRef() as MutableRefObject<Countdown>;
   const { speak } = useSpeechSynthesis();
 
-  console.log("Renderd");
   useEffect(() => {
     if (hub?.sessionTimer) {
       if (hub?.sessionTimer.isPaused) getTimerApi().pause();
@@ -51,26 +50,26 @@ const MobTimerRemote = () => {
     }
   };
 
-  const messages = () :string[] | undefined => {
+  const messages = (): string[] | undefined => {
     const current = getCurrentDriver()?.firstName;
     const next = getNextDriver()?.firstName;
-    
-  if(current && next){
-    return [
-      `Hi ${current} your time is over. Now its ${next}s turn.`,
-      `Hello ${current} you scallywanker, your time is over. Now its ${next}s turn.`,
-      `Goodday ${current} mate your time is ovah. Now its ${next}s turn.`,
-      `Hi ${current} your time is over. Now its ${next}s turn. Please hurry up slowpokes.`,
-      `Soisoisoisoi ${current} your time is up. Now its ${next}s turn. Godspeed.`,
-    ]
-  }
-  }
+
+    if (current && next) {
+      return [
+        `Hi ${current} your time is over. Now its ${next}s turn.`,
+        `Hello ${current} you scallywanker, your time is over. Now its ${next}s turn.`,
+        `Goodday ${current} mate your time is ovah. Now its ${next}s turn.`,
+        `Hi ${current} your time is over. Now its ${next}s turn. Please hurry up slowpokes.`,
+        `Soisoisoisoi ${current} your time is up. Now its ${next}s turn. Godspeed.`,
+      ];
+    }
+  };
 
   const randomMessage = () => {
-    
     const randMessage = messages();
-    
-    if(randMessage) return randMessage[Math.floor(Math.random()*messages.length)]
+
+    if (randMessage)
+      return randMessage[Math.floor(Math.random() * messages.length)];
   };
 
   const timerCompleteHandler = async () => {

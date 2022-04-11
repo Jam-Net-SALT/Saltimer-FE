@@ -7,6 +7,7 @@ import {
   addNewMember,
   selectLocalMobSession,
 } from "../../store/LocalMobSession";
+import { AnonymsUser } from "../../types/User";
 
 interface NewMemberUser {
   name: string;
@@ -27,13 +28,13 @@ const LocalSessionController = () => {
   });
 
   const onSubmitHandler = (values: NewMemberUser) => {
-    dispatch(
-      addNewMember({
-        name: values.name,
-        imageUrl: values.url,
-        turn: localMobSession.members.length,
-      })
-    );
+    const newMember: AnonymsUser = {
+      name: values.name,
+      imageUrl: values.url,
+      turn: localMobSession.members.length,
+      id: localMobSession.members.length.toString(),
+    };
+    dispatch(addNewMember(newMember));
     setOpenNewMemberModal(false);
   };
 
